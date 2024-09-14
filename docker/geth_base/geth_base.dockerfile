@@ -3,7 +3,7 @@ FROM go_base:2.0
 
 
 # 安装必要的构建工具和库
-RUN apt-get update && apt-get install -y xz-utils build-essential python3 python3-pip
+RUN apt-get update && apt-get install -y xz-utils build-essential python3 python3-pip jq
 
 # 复制指定版本的 Node.js 和 Geth 客户端
 COPY geth_base_files/nodejs.tar.xz /tmp/
