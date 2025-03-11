@@ -1,5 +1,5 @@
 ## To test locally:
-# docker build --pull -t cosmossdk-proto:0.1.0
+# docker build -t proto-builder-1001:0.1.0 .
 ## 这个dockerfile 用于生成在cosmos module 中处理 proto 的那个镜像
 ## 用于 替代 cosmos-sdk 的 proto-build 镜像
 ## 用法: 主要是ARG UID=1001 这一行  将UID 改为 对应的 宿主机 实用用户的UID
