@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pi.dev"
+  short_description: "Work with Pi coding agent, packages, and skills"
+  default_prompt: "Use $pi-dev to help me install, configure, or troubleshoot the Pi coding agent."

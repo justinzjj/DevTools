@@ -13,3 +13,4 @@
 - `geth_start_poa`：geth的快速启动脚本，默认在docker环境中执行
 - `nas`：家用nas中的部分脚本
 - `zip`：快速压缩ICT文件的脚本
+- `ai`：个人 AI skills、workflows、templates 和 notes

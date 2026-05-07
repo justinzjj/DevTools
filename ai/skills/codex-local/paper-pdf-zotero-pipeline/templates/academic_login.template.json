@@ -1,0 +1,88 @@
+{
+  "institution_name": "中国科学院",
+  "institution_aliases": [
+    "中国科学院",
+    "Chinese Academy of Sciences",
+    "CAS",
+    "中国科学院大学",
+    "University of Chinese Academy of Sciences",
+    "UCAS",
+    "Academy of Mathematics & Systems Science CAS",
+    "Academy of Mathematics & Systems Science CAS (CST Cloud)"
+  ],
+  "sso": {
+    "provider": "中国科技云",
+    "provider_aliases": [
+      "中国科技云",
+      "China Science and Technology Cloud",
+      "CSTCloud"
+    ],
+    "login_domains": [
+      "escience.cn",
+      "www.escience.cn",
+      "passport.escience.cn"
+    ],
+    "shared_email": "",
+    "shared_password": "",
+    "notes": "IEEE / ACM / Springer 若跳转到中国科技云，默认复用同一组邮箱和密码。"
+  },
+  "accounts": [
+    {
+      "provider": "ieee",
+      "login_type": "institution",
+      "institution_hint": "中国科学院",
+      "institution_candidates": [
+        "中国科学院",
+        "Chinese Academy of Sciences",
+        "CAS",
+        "中国科学院大学",
+        "University of Chinese Academy of Sciences",
+        "UCAS",
+        "Academy of Mathematics & Systems Science CAS",
+        "Academy of Mathematics & Systems Science CAS (CST Cloud)"
+      ],
+      "sso_provider": "中国科技云",
+      "username": "",
+      "password": "",
+      "notes": ""
+    },
+    {
+      "provider": "acm",
+      "login_type": "institution",
+      "institution_hint": "中国科学院",
+      "institution_candidates": [
+        "中国科学院",
+        "Chinese Academy of Sciences",
+        "CAS",
+        "中国科学院大学",
+        "University of Chinese Academy of Sciences",
+        "UCAS",
+        "Academy of Mathematics & Systems Science CAS",
+        "Academy of Mathematics & Systems Science CAS (CST Cloud)"
+      ],
+      "sso_provider": "中国科技云",
+      "username": "",
+      "password": "",
+      "notes": ""
+    },
+    {
+      "provider": "springer",
+      "login_type": "institution",
+      "institution_hint": "中国科学院",
+      "institution_candidates": [
+        "中国科学院",
+        "Chinese Academy of Sciences",
+        "CAS",
+        "中国科学院大学",
+        "University of Chinese Academy of Sciences",
+        "UCAS",
+        "Academy of Mathematics & Systems Science CAS",
+        "Academy of Mathematics & Systems Science CAS (CST Cloud)"
+      ],
+      "sso_provider": "中国科技云",
+      "username": "",
+      "password": "",
+      "notes": ""
+    }
+  ]
+}
