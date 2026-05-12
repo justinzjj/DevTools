@@ -17,6 +17,7 @@
 - `neat-freak`
 - `openclaw-config`
 - `paper-pdf-zotero-pipeline`
+- `research-project-memory`
 
 ## 本机安装/通用技能备份
 
