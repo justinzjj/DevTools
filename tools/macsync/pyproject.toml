@@ -1,0 +1,15 @@
+[project]
+name = "macsync"
+version = "0.1.0"
+description = "Personal Git-based file sync manager for Mac nodes and an intranet Git hub."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+macsync = "macsync.cli:entrypoint"
+macsync-server = "macsync.server_cli:entrypoint"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

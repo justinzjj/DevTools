@@ -1,0 +1,27 @@
+sync_remote: macsync
+github_remote: origin
+gitea_host: codex-linux-wg
+gitea_web_url: http://codex-linux-wg:3000
+gitea_ssh_user: git
+gitea_owner: justin
+repos:
+  - name: DevTools
+    path: ~/ICT/4-code/0-DevTools/DevTools
+    branch: main
+    gitea_repo: DevTools
+    github: git@github.com:justinzjj/DevTools.git
+
+  - name: CrossDataGen
+    path: ~/ICT/1-个人知识库/4-论文工作/4-CrossDataGen/1-实验/CrossDataGen
+    branch: codex/related-work-data-collection
+    gitea_repo: CrossDataGen
+    github: git@github.com:justinzjj/CrossDataGen.git
+
+  - name: TrustMap-doc
+    path: ~/ICT/1-个人知识库/4-论文工作/1-TrustMap
+    branch: main
+    gitea_repo: TrustMap-doc
+    github: git@github.com:justinzjj/TrustMap-doc.git
+    ignore:
+      - "**/.DS_Store"
+      - "**/.obsidian/workspace*"
