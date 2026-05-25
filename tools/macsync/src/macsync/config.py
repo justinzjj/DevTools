@@ -6,6 +6,21 @@ from typing import Any
 
 
 DEFAULT_CONFIG_PATH = Path("~/.config/macsync/config.yml")
+DEFAULT_CONFIG_TEMPLATE = """sync_remote: macsync
+github_remote: origin
+gitea_host: codex-linux-wg
+gitea_web_url: http://codex-linux-wg:3000
+gitea_ssh_user: git
+gitea_owner: justin
+repos:
+  - name: ExampleRepo
+    path: ~/ICT/path/to/ExampleRepo
+    branch: main
+    gitea_repo: ExampleRepo
+    github: git@github.com:justinzjj/ExampleRepo.git
+    ignore:
+      - "**/.DS_Store"
+"""
 
 
 @dataclass(frozen=True)
@@ -55,6 +70,28 @@ def load_config(path: str | Path | None = None) -> MacsyncConfig:
         gitea_owner=str(data["gitea_owner"]),
         repos=repos,
     )
+
+
+def write_default_config(path: str | Path, overwrite: bool = False) -> Path:
+    config_path = Path(path).expanduser()
+    if config_path.exists() and not overwrite:
+        raise FileExistsError(f"config already exists: {config_path}")
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    config_path.write_text(DEFAULT_CONFIG_TEMPLATE, encoding="utf-8")
+    return config_path
+
+
+def validate_config(config: MacsyncConfig) -> list[str]:
+    issues: list[str] = []
+    if not config.repos:
+        issues.append("no repos configured")
+    for repo in config.repos:
+        if not repo.path.exists():
+            issues.append(f"{repo.name}: missing local path: {repo.path}")
+            continue
+        if not (repo.path / ".git").exists():
+            issues.append(f"{repo.name}: local path is not a git repository: {repo.path}")
+    return issues
 
 
 def _parse_simple_yaml(text: str) -> dict[str, Any]:

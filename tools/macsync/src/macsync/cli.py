@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 from macsync import __version__
-from macsync.config import DEFAULT_CONFIG_PATH, MacsyncConfig, RepoConfig, load_config
+from macsync.config import DEFAULT_CONFIG_PATH, MacsyncConfig, RepoConfig, load_config, validate_config, write_default_config
 from macsync.git_ops import GitRunner, build_handoff_commands, build_setup_remote_commands, inspect_repo, run_commands
 
 
@@ -16,7 +16,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--config", default=str(DEFAULT_CONFIG_PATH.expanduser()))
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("version")
+    init_config = sub.add_parser("init-config")
+    init_config.add_argument("--force", action="store_true")
     sub.add_parser("list")
+    sub.add_parser("doctor")
     sub.add_parser("status")
     setup = sub.add_parser("setup-remotes")
     setup.add_argument("--dry-run", action="store_true")
@@ -32,10 +35,16 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "version":
         print(f"macsync {__version__}")
         return 0
+    if args.command == "init-config":
+        path = write_default_config(args.config, overwrite=args.force)
+        print(f"wrote config template: {path}")
+        return 0
 
     config = load_config(args.config)
     if args.command == "list":
         _print_repo_list(config)
+    elif args.command == "doctor":
+        return _doctor(config)
     elif args.command == "status":
         _print_status(config)
     elif args.command == "setup-remotes":
@@ -69,6 +78,16 @@ def _print_status(config: MacsyncConfig) -> None:
             f"{config.sync_remote}=+{status.sync_ahead}/-{status.sync_behind} "
             f"{config.github_remote}=+{status.origin_ahead}/-{status.origin_behind}"
         )
+
+
+def _doctor(config: MacsyncConfig) -> int:
+    issues = validate_config(config)
+    if not issues:
+        print("macsync config ok")
+        return 0
+    for issue in issues:
+        print(f"ISSUE: {issue}")
+    return 1
 
 
 def _setup_remotes(config: MacsyncConfig, dry_run: bool) -> None:

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from macsync.config import load_config
+from macsync.config import DEFAULT_CONFIG_TEMPLATE, load_config, validate_config
 
 
 def test_load_config_expands_repo_paths(tmp_path, monkeypatch):
@@ -36,3 +36,32 @@ repos:
     assert loaded.repos[0].name == "DevTools"
     assert loaded.repos[0].gitea_repo == "DevTools"
     assert loaded.repos[0].path == Path(home / "ICT/4-code/0-DevTools/DevTools")
+
+
+def test_default_config_template_contains_editable_mapping():
+    assert "repos:" in DEFAULT_CONFIG_TEMPLATE
+    assert "path:" in DEFAULT_CONFIG_TEMPLATE
+    assert "gitea_repo:" in DEFAULT_CONFIG_TEMPLATE
+
+
+def test_validate_config_reports_missing_local_path(tmp_path):
+    config = tmp_path / "macsync.yml"
+    config.write_text(
+        """
+sync_remote: macsync
+github_remote: origin
+gitea_host: codex-linux-wg
+gitea_owner: justin
+repos:
+  - name: MissingRepo
+    path: /tmp/definitely-missing-macsync-path
+    branch: main
+    gitea_repo: MissingRepo
+""".strip(),
+        encoding="utf-8",
+    )
+
+    loaded = load_config(config)
+    issues = validate_config(loaded)
+
+    assert any("missing local path" in issue for issue in issues)

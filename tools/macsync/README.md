@@ -36,6 +36,25 @@ Each managed repository keeps two remotes:
 
 ## Install Scripts
 
+Build single-file executable commands:
+
+```bash
+./scripts/build-bin.sh
+```
+
+This creates:
+
+```text
+dist/macsync
+dist/macsync-server
+```
+
+Install the executable commands to `~/.local/bin`:
+
+```bash
+./scripts/install-bin.sh
+```
+
 Install on a Mac node:
 
 ```bash
@@ -57,6 +76,8 @@ Both scripts install in user space by default:
 ```
 
 They do not use `sudo`, do not write `/srv/git`, and do not start Gitea.
+
+The `install-bin.sh` path is the recommended install route for normal command-line use. The older `install-mac-node.sh` and `install-server.sh` scripts remain available when you prefer an editable Python virtual environment install.
 
 Run the isolated safety test:
 
@@ -99,6 +120,12 @@ macsync-server --dry-run init DevTools.git CrossDataGen.git
 
 Create `~/.config/macsync/config.yml`:
 
+```bash
+macsync init-config
+```
+
+Then edit the generated mapping file:
+
 ```yaml
 sync_remote: macsync
 github_remote: origin
@@ -126,6 +153,12 @@ Show what syncs where, including Gitea web URLs:
 
 ```bash
 macsync list
+```
+
+Validate the mapping file:
+
+```bash
+macsync doctor
 ```
 
 Add the intranet remote to each repo:
