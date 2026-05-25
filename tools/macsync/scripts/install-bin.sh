@@ -15,6 +15,7 @@ install -m 0755 "$ROOT/dist/macsync-server" "$BIN_DIR/macsync-server"
 MACSYNC_VERSION="$("$BIN_DIR/macsync" version)"
 PATH_STATUS="already available in current PATH"
 SHELL_NOTE=""
+TRY_PREFIX=""
 
 ensure_zsh_path_block() {
   local target_file="$1"
@@ -41,7 +42,15 @@ case ":$PATH:" in
     ensure_zsh_path_block "$HOME/.zshrc"
     ensure_zsh_path_block "$HOME/.zprofile"
     PATH_STATUS="added to ~/.zshrc and ~/.zprofile"
-    SHELL_NOTE="Run this in the current terminal: source ~/.zshrc && rehash"
+    TRY_PREFIX="$BIN_DIR/"
+    SHELL_NOTE="Note:
+  This script updated your zsh startup files, but a child script cannot
+  update the PATH of the terminal that launched it.
+
+  To use macsync immediately in this terminal, run:
+    export PATH=\"$BIN_DIR:\$PATH\" && rehash
+
+  Or open a new terminal."
     ;;
 esac
 
@@ -61,9 +70,9 @@ PATH setup:
   $BIN_DIR is $PATH_STATUS
 
 Try:
-  macsync version
-  macsync init-config
-  macsync list
+  ${TRY_PREFIX}macsync version
+  ${TRY_PREFIX}macsync init-config
+  ${TRY_PREFIX}macsync list
 
 ${SHELL_NOTE}
 ============================================================
