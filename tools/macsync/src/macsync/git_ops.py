@@ -43,8 +43,10 @@ def inspect_repo(
     sync_ahead, sync_behind = _parse_divergence(
         runner.run(repo.path, ["rev-list", "--left-right", "--count", f"HEAD...{sync_remote}/{repo.branch}"])
     )
-    origin_ahead, origin_behind = _parse_divergence(
-        runner.run(repo.path, ["rev-list", "--left-right", "--count", f"HEAD...{github_remote}/{repo.branch}"])
+    origin_ahead, origin_behind = _safe_parse_divergence(
+        runner,
+        repo.path,
+        ["rev-list", "--left-right", "--count", f"HEAD...{github_remote}/{repo.branch}"],
     )
     return RepoStatus(
         name=repo.name,
@@ -76,15 +78,63 @@ def build_handoff_commands(
     return commands
 
 
+def build_sync_commands(repo: RepoConfig, sync_remote: str, merge: bool = False) -> list[list[str]]:
+    pull_command = ["git", "pull", sync_remote, repo.branch]
+    if merge:
+        pull_command.insert(2, "--no-rebase")
+    else:
+        pull_command.insert(2, "--ff-only")
+    return [
+        ["git", "fetch", sync_remote],
+        pull_command,
+    ]
+
+
 def build_setup_remote_commands(
     repo: RepoConfig,
     sync_remote: str,
     gitea_host: str,
     gitea_owner: str,
     gitea_ssh_user: str,
+    gitea_ssh_port: int | None = None,
 ) -> list[list[str]]:
-    url = f"{gitea_ssh_user}@{gitea_host}:{gitea_owner}/{repo.resolved_gitea_repo()}.git"
+    url = build_gitea_ssh_url(repo, gitea_host, gitea_owner, gitea_ssh_user, gitea_ssh_port)
     return [["git", "remote", "add", sync_remote, url]]
+
+
+def build_gitea_ssh_url(
+    repo: RepoConfig,
+    gitea_host: str,
+    gitea_owner: str,
+    gitea_ssh_user: str,
+    gitea_ssh_port: int | None = None,
+) -> str:
+    repo_path = f"{gitea_owner.strip('/')}/{repo.resolved_gitea_repo()}.git"
+    if gitea_ssh_port:
+        return f"ssh://{gitea_ssh_user}@{gitea_host}:{gitea_ssh_port}/{repo_path}"
+    return f"{gitea_ssh_user}@{gitea_host}:{repo_path}"
+
+
+def build_clone_commands(
+    repos: list[RepoConfig],
+    sync_remote: str,
+    gitea_host: str,
+    gitea_owner: str,
+    gitea_ssh_user: str,
+    gitea_ssh_port: int | None = None,
+) -> list[tuple[Path, list[str]]]:
+    commands: list[tuple[Path, list[str]]] = []
+    for repo in repos:
+        if repo.path.exists():
+            continue
+        remote = build_gitea_ssh_url(repo, gitea_host, gitea_owner, gitea_ssh_user, gitea_ssh_port)
+        commands.append(
+            (
+                repo.path.parent,
+                ["git", "clone", "--origin", sync_remote, remote, str(repo.path)],
+            )
+        )
+    return commands
 
 
 def run_commands(cwd: Path, commands: list[list[str]], dry_run: bool = False) -> None:
@@ -97,3 +147,10 @@ def run_commands(cwd: Path, commands: list[list[str]], dry_run: bool = False) ->
 def _parse_divergence(output: str) -> tuple[int, int]:
     left, right = output.strip().split()
     return int(left), int(right)
+
+
+def _safe_parse_divergence(runner: GitRunner, cwd: Path, args: list[str]) -> tuple[int, int]:
+    try:
+        return _parse_divergence(runner.run(cwd, args))
+    except Exception:
+        return 0, 0

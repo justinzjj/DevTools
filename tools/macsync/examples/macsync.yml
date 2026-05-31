@@ -3,6 +3,7 @@ github_remote: origin
 gitea_host: codex-linux-wg
 gitea_web_url: http://codex-linux-wg:3000
 gitea_ssh_user: git
+gitea_ssh_port:
 gitea_owner: justin
 repos:
   - name: DevTools
@@ -25,3 +26,18 @@ repos:
     ignore:
       - "**/.DS_Store"
       - "**/.obsidian/workspace*"
+
+workspaces:
+  - name: personal-knowledge
+    root: ~/ICT/1-个人知识库
+    root_repo: personal-knowledge-root
+    branch: main
+    auto_discover_nested_git: true
+    ignore:
+      - "**/.DS_Store"
+      - ".trash/**"
+      - ".obsidian/workspace*"
+      - "**/node_modules/**"
+      - "**/.venv/**"
+      - "**/__pycache__/**"
+      - "附件/**"

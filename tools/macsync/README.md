@@ -83,9 +83,10 @@ Run the isolated safety test:
 
 ```bash
 PATH="$HOME/.local/bin:$PATH" ./scripts/e2e-temp-git-sync.sh
+PATH="$HOME/.local/bin:$PATH" ./scripts/e2e-temp-workspace-sync.sh
 ```
 
-The test creates a temporary bare Git repository and two temporary clones under `/tmp`, then verifies `macsync handoff` and `macsync sync`.
+The tests create temporary bare Git repositories and temporary Mac-like nodes under `/tmp`, then verify `handoff`, `sync`, and workspace root-plus-nested-repo orchestration. Workspace E2E logs are kept under the run directory's `logs/` folder.
 
 ## Server Setup With Gitea
 
@@ -132,6 +133,7 @@ github_remote: origin
 gitea_host: codex-linux-wg
 gitea_web_url: http://codex-linux-wg:3000
 gitea_ssh_user: git
+gitea_ssh_port:
 gitea_owner: justin
 repos:
   - name: DevTools
@@ -147,6 +149,18 @@ repos:
     github: git@github.com:justinzjj/TrustMap-doc.git
     ignore:
       - "**/.DS_Store"
+
+workspaces:
+  - name: personal-knowledge
+    root: ~/ICT/1-个人知识库
+    root_repo: personal-knowledge-root
+    branch: main
+    auto_discover_nested_git: true
+    ignore:
+      - "**/.DS_Store"
+      - ".trash/**"
+      - ".obsidian/workspace*"
+      - "**/node_modules/**"
 ```
 
 Show what syncs where, including Gitea web URLs:
@@ -159,6 +173,33 @@ Validate the mapping file:
 
 ```bash
 macsync doctor
+```
+
+Discover repositories from Gitea:
+
+```bash
+macsync discover
+```
+
+If the repositories are private, export a Gitea token first:
+
+```bash
+export MACSYNC_GITEA_TOKEN=<token>
+macsync discover
+```
+
+Adopt repositories into the local mapping file:
+
+```bash
+macsync adopt --base ~/ICT/macsync --repo DevTools
+macsync adopt --base ~/ICT/macsync --all
+```
+
+Clone missing local repositories from the mapping file:
+
+```bash
+macsync clone --all
+macsync clone --repo DevTools
 ```
 
 Add the intranet remote to each repo:
@@ -174,6 +215,12 @@ Start work on a Mac:
 
 ```bash
 macsync sync
+```
+
+Allow Git to create a merge commit when both devices have new commits:
+
+```bash
+macsync sync --merge
 ```
 
 Leave a Mac and hand off work:
@@ -194,6 +241,22 @@ Check all managed repos:
 macsync status
 ```
 
+## Workspace Workflow
+
+A workspace is a large directory that should feel like one sync target, while `macsync` manages the root Git repository and nested Git repositories separately.
+
+```bash
+macsync workspace list
+macsync workspace discover personal-knowledge
+macsync workspace clone personal-knowledge
+macsync workspace apply-ignore personal-knowledge
+macsync workspace status personal-knowledge
+macsync workspace sync personal-knowledge
+macsync workspace handoff personal-knowledge
+```
+
+`workspace handoff` applies a marked `.gitignore` block and writes `.macsync/workspace.yml` before committing, so nested repositories are not accidentally committed into the root repo and new nodes can discover where nested repositories should be cloned.
+
 ## Conflict Policy
 
 `macsync sync` uses:
@@ -203,6 +266,14 @@ git pull --ff-only macsync <branch>
 ```
 
 This is intentionally conservative. If histories diverge, `macsync` stops and lets Git show the conflict. Resolve it with normal Git commands, then run `macsync handoff` again.
+
+`macsync sync --merge` uses:
+
+```bash
+git pull --no-rebase macsync <branch>
+```
+
+This allows Git to merge independent changes, while still surfacing normal Git conflicts when both devices edit the same file.
 
 ## Ignore Policy
 
