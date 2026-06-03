@@ -1,6 +1,6 @@
 ---
 name: personal-knowledge-agent
-description: "Use when working with an agent-first personal knowledge base: answering questions from a knowledge graph, capturing new learning, daily consolidation, promoting knowledge cards, creating Source Cards for papers/GitHub/blogs/videos/books/docs/courses/datasets/projects, extracting knowledge from other project repositories, importing project knowledge packages, finding analogies to existing knowledge, or enabling cross-repository agent queries."
+description: "Use when working with an agent-first personal knowledge base: answering questions from a knowledge graph, capturing new learning, daily consolidation, promoting knowledge cards, creating Source Cards for papers/GitHub/blogs/videos/books/docs/courses/datasets/projects, importing lightweight paper memory from Zotero collections/notes/tags, extracting knowledge from other project repositories, importing project knowledge packages, finding analogies to existing knowledge, or enabling cross-repository agent queries."
 ---
 
 # Personal Knowledge Agent
@@ -27,6 +27,7 @@ For full repository conventions, read `references/repository-protocol.md` when w
 - **consolidate-mode**: The user asks to整理今天, daily consolidate, summarize pending days, or handle lazy reminders.
 - **promote-mode**: The user asks to turn cache/digest/import output into formal cards, source cards, relations, or indexes.
 - **source-mode**: The user shares a paper, GitHub repo, blog, video, book, documentation, course, dataset, conversation, or project material.
+- **zotero-paper-import-mode**: The user asks to link/read Zotero, import papers, convert Zotero notes/tags/collections into lightweight paper source cards, or remember papers they have read.
 - **analogy-mode**: The user asks what something resembles, how it relates to known knowledge, where an analogy breaks, or what mental model applies.
 - **project-extract-mode**: The user is in another project and asks to extract durable knowledge from that project.
 - **project-import-mode**: The user asks to import an extraction package or project-derived knowledge into the personal knowledge base.
@@ -130,6 +131,42 @@ Treat external materials as Source Cards. Source types include:
 A Source Card should record what the material contributes to the knowledge graph: concepts, claims, implementations, examples, contradictions, analogies, evidence, reusable methods, and open questions.
 
 For papers, include DOI and Zotero key when available. For repositories, include repo URL/path, language, notable modules, and evidence files. For videos, include transcript path or timestamps when available.
+
+## Zotero Paper Import Mode
+
+Use this mode when Zotero is the source of paper memory. The goal is not to create academic deep-reading notes by default. The goal is to make the personal knowledge base remember: "I have seen or read this paper, it belongs to these directions, it contributes this method/frame/dataset, and I may want to retrieve it later."
+
+Coordinate with the Zotero skill or local Zotero API:
+
+1. Check Zotero readiness before querying. If the local API is unavailable, open or ask the user to open Zotero Desktop and retry.
+2. Prefer a narrow import scope: an explicit Zotero collection, selected tag, search query, star/important marker, or papers with non-empty notes.
+3. Treat Zotero writes as out of scope unless the user explicitly asks to modify Zotero. Normal import is read-only against Zotero.
+4. Read each candidate's parent item metadata, tags, collections, citation key, DOI/URL, and child note/attachment metadata. Read full PDF text only when the user explicitly asks for deeper paper understanding.
+5. Prefer user-authored or previously generated Zotero notes over abstract-only summaries. Mark note-derived content as "from Zotero note" when useful.
+6. Do not use `/unread` as evidence of having read a paper. Positive signals include a non-empty child note, star/important tag, explicit read-status metadata, or user selection.
+7. Dedupe by Zotero key first, then DOI, then normalized title. If a source card already exists, propose an update instead of creating a duplicate.
+
+Default staging workflow:
+
+1. Write import output under `04-Import-Staging/zotero/<YYYY-MM-DD>-<scope>/`.
+2. Create an import package listing source candidates, evidence fields, duplicate risk, and suggested promotion targets.
+3. Create draft paper source cards in the staging folder, not directly under `20-Source-Cards/paper/`, unless the user explicitly authorizes direct promotion.
+4. Create a review file under `02-Review-Queue/` summarizing the batch and asking which cards should be promoted.
+5. Promote only after review by moving/creating formal source cards and updating `30-Agent-Index/sources.yaml`.
+
+Lightweight Zotero paper cards should emphasize retrieval and personal memory:
+
+- "这个材料是什么": one or two sentences.
+- "我为什么会想找回它": the direction, method, dataset, failure mode, or analogy that makes it useful.
+- "Zotero 线索": Zotero key, citation key, DOI/URL, collection, tags, note/attachment presence.
+- "方法/方向标签": user-facing phrases derived from tags and notes.
+- "后续动作": reread, compare with another paper, promote to knowledge card, or leave as source memory.
+
+Avoid overproduction:
+
+- Do not claim the user fully read a paper just because it appears in Zotero.
+- Do not turn every paper into a dense literature review.
+- Do not create new formal knowledge concepts from imported papers unless the batch review explicitly approves them.
 
 ## Analogy Mode
 

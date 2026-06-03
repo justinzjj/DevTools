@@ -80,3 +80,25 @@ import_notes:
   duplicate_risk: unknown
   needs_human_review: true
 ```
+
+## Zotero Paper Import
+
+When Zotero is the paper source, use it as a read-only evidence layer unless the user explicitly asks to modify Zotero. Import lightweight paper memory rather than dense literature-review notes by default.
+
+Recommended flow:
+
+1. Narrow the scope by collection, tag, search query, star/important marker, non-empty child notes, or explicit user selection.
+2. Read parent metadata, creators, year/date, DOI, URL, citation key, Zotero key, tags, collections, child notes, and attachment presence.
+3. Treat `/unread` only as a status tag, not as evidence of reading.
+4. Stage output under `04-Import-Staging/zotero/<YYYY-MM-DD>-<scope>/`.
+5. Put draft paper cards and `zotero-import-package.yaml` in staging.
+6. Put the human review summary in `02-Review-Queue/`.
+7. Promote to `20-Source-Cards/paper/` and `30-Agent-Index/sources.yaml` only after approval.
+
+Draft paper cards should answer:
+
+- What is this material?
+- Why might the user want to retrieve it later?
+- Which direction/method/failure mode does it represent?
+- What Zotero evidence points back to it?
+- What should happen next: leave as memory, compare, reread, or promote into formal knowledge?
