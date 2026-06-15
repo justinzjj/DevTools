@@ -1,0 +1,4 @@
+interface:
+  display_name: "Personal Knowledge Recall"
+  short_description: "Recall saved knowledge from your personal KB"
+  default_prompt: "Use $personal-knowledge-recall to check my personal knowledge base before answering this."

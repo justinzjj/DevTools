@@ -1,0 +1,23 @@
+{
+  "skill_name": "server-local-database-access",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我查一下 server_local 论文库里 VLDB 每年大概有多少论文，给我 SQL 和注意事项。",
+      "expected_output": "Selects paper_collection_literature, joins papers/yearly_collections/venues, filters venue name, uses grouped count, and mentions limiting or performance considerations.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "paperMiner 里有没有数据库领域事务与并发控制主题的本地 PDF？查最近 50 篇。",
+      "expected_output": "Uses paper_collection_literature and the paper_miner_* tables, filters domain/topic, returns title/year/venue/doi/pdf_path/local_pdf_exists with LIMIT 50.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "server_local 采集队列是不是卡住了？我想看失败任务和 retry_wait。",
+      "expected_output": "Chooses paper_collection_control, queries job_queue by status failed/retry_wait with last_error and updated_at, and warns that job_queue is a large table.",
+      "files": []
+    }
+  ]
+}

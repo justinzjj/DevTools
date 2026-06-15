@@ -19,12 +19,18 @@ Resolve the knowledge base path in this order:
 - `02-Review-Queue/`: human review before durable promotion.
 - `03-Promotion-Candidates/`: structured candidates.
 - `04-Import-Staging/`: project import staging.
+- `05-Daily-Workspace/`: human-readable daily work pages and weekly review.
+- `06-Ideas/`: low-friction idea inbox, idea index, and promoted idea detail cards.
 - `10-Knowledge-Cards/`: formal knowledge cards.
 - `20-Source-Cards/`: source cards for papers, repos, posts, videos, books, docs, courses, datasets, conversations, and projects.
 - `30-Agent-Index/`: agent-readable indexes and relation graph.
 - `40-Mental-Models/`: stable cross-domain models.
 - `50-Projects/`: external project links and import history.
+- `50-Projects/common-repositories.yaml`: fast index for common repositories such as DevTools, TrustMap, and CrossDataGen.
 - `templates/`: card, workflow, and import templates.
+- `00-Agent-State/work-state.yaml`: current work state and open loops.
+- `00-Agent-State/idea-state.yaml`: idea capture state and review queue.
+- `00-Agent-State/conversation-lanes.yaml`: standing conversation lanes, default read/write targets, and lane boundaries.
 
 ## Lifecycle
 
@@ -34,6 +40,19 @@ Daily Inbox
   -> Promotion Candidates
   -> Review Queue
   -> Knowledge Cards / Source Cards / Relations / Mental Models
+```
+
+Daily work and ideas are separate front-stage flows:
+
+```text
+Daily Workspace
+  -> Work State / Open Loops
+  -> Daily Wrap / Weekly Review
+
+Idea Inbox
+  -> Idea Index
+  -> Idea Detail Cards
+  -> Knowledge Cards / Projects / Archive
 ```
 
 ## Status Semantics
@@ -47,6 +66,15 @@ Daily Inbox
 - `archived`: low-priority historical knowledge.
 
 Status does not forbid use. It tells the agent how to frame the information.
+
+Idea status uses a compatible but lighter lifecycle:
+
+- `captured`: raw idea.
+- `reviewed`: looked at during daily or weekly review.
+- `exploring`: worth clarifying or validating.
+- `active`: connected to a project or experiment.
+- `promoted`: moved into a durable card, project, or plan.
+- `archived`: preserved but not active.
 
 ## Relation Vocabulary
 

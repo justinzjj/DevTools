@@ -31,6 +31,10 @@ For full repository conventions, read `references/repository-protocol.md` when w
 - **analogy-mode**: The user asks what something resembles, how it relates to known knowledge, where an analogy breaks, or what mental model applies.
 - **project-extract-mode**: The user is in another project and asks to extract durable knowledge from that project.
 - **project-import-mode**: The user asks to import an extraction package or project-derived knowledge into the personal knowledge base.
+- **daily-work-mode**: The user asks for 今日开工, 整理遗留, 今天做什么, 安排今天, morning brief, or a daily work entry.
+- **daily-wrap-mode**: The user asks for 收工, 今日总结, wrap up, or rolling work forward to tomorrow.
+- **idea-capture-mode**: The user shares a quick idea, says 记录一个点子, 我有个想法, 突然想到, or wants low-friction idea capture.
+- **idea-promote-mode**: The user asks to 展开这个点子, 推进这个点子, create an idea detail card, or connect an idea to a project/knowledge card.
 - **bridge-mode**: Another repository or project asks to query the personal knowledge base.
 
 ## Standard Read Order
@@ -40,9 +44,11 @@ When inside the personal knowledge base:
 1. Read `AGENT_PROTOCOL.md`.
 2. Read `00-Agent-State/knowledge-state.yaml`.
 3. Read `00-Agent-State/current-context.md`.
-4. Use `30-Agent-Index/routes.yaml` to classify the task.
-5. Use `30-Agent-Index/aliases.yaml`, `concepts.yaml`, `sources.yaml`, `questions.yaml`, `relations.yaml`, and `relation-vocabulary.yaml` only as needed.
-6. Read the smallest useful set of cards from `10-Knowledge-Cards/`, `20-Source-Cards/`, and `40-Mental-Models/`.
+4. Read `00-Agent-State/conversation-lanes.yaml` when the request belongs to a standing conversation lane.
+5. Use `30-Agent-Index/routes.yaml` to classify the task.
+6. Use `30-Agent-Index/aliases.yaml`, `concepts.yaml`, `sources.yaml`, `questions.yaml`, `relations.yaml`, and `relation-vocabulary.yaml` only as needed.
+7. Read the smallest useful set of cards from `10-Knowledge-Cards/`, `20-Source-Cards/`, and `40-Mental-Models/`.
+8. For work or idea tasks, read `00-Agent-State/work-state.yaml`, `00-Agent-State/idea-state.yaml`, `05-Daily-Workspace/`, and `06-Ideas/` only as needed.
 
 When outside the personal knowledge base:
 
@@ -86,6 +92,80 @@ Append to `00-Inbox/daily/YYYY-MM-DD.md`. Keep capture low-friction:
 ```
 
 Do not over-polish daily inbox entries. Preserve enough raw context to reconstruct the user's thinking later.
+
+## Daily Work Mode
+
+Use this mode when the user wants the personal knowledge base to become today's work entry.
+
+Read:
+
+1. `AGENT_PROTOCOL.md`
+2. `00-Agent-State/work-state.yaml`
+3. `00-Agent-State/current-context.md`
+4. `05-Daily-Workspace/daily/` for recent work pages
+5. `05-Daily-Workspace/weekly/` when weekly carryover matters
+6. `50-Projects/common-repositories.yaml`
+7. `50-Projects/project-links.yaml`
+8. `01-Daily-Digest/` and `02-Review-Queue/` only when knowledge-review backlog affects today's work
+
+Morning startup output should include:
+
+- historical carryover
+- active projects and open loops
+- suggested priorities
+- today's plan
+- blockers and risks
+- the first concrete action
+
+If today's daily workspace file does not exist, create it from `templates/workflow/daily-workspace.md`. Update `00-Agent-State/work-state.yaml` when open loops, blockers, or active focus changed.
+
+Keep work rhythm separate from knowledge consolidation. Do not turn every work note into a knowledge card candidate.
+
+## Daily Wrap Mode
+
+Use this mode for end-of-day wrap-up.
+
+Update the current daily workspace page with:
+
+- completed work
+- important notes
+- unfinished tasks
+- blockers
+- tomorrow carryover
+- ideas captured during the day
+
+Then update `00-Agent-State/work-state.yaml` so the next morning startup can recover open loops quickly.
+
+## Idea Capture Mode
+
+Use this mode for low-friction idea capture. The goal is to preserve the spark, not to over-explain it.
+
+Append to `06-Ideas/inbox.md` using:
+
+```md
+### HH:MM - <short title>
+
+- Raw:
+- Related Projects:
+- Possible Direction:
+- Next Step:
+- Status: captured
+```
+
+Update `06-Ideas/idea-index.yaml` only when the idea has a stable title, an obvious related project, or the user wants it tracked. Update `00-Agent-State/idea-state.yaml` when the idea should appear in review.
+
+## Idea Promote Mode
+
+Promote an idea only when it is recurring, actionable, project-linked, or explicitly approved.
+
+Promotion may create:
+
+- `06-Ideas/ideas/<idea-id>.md`
+- a review item under `02-Review-Queue/`
+- a project link under `50-Projects/`
+- a future knowledge-card or source-card candidate
+
+Preserve the original idea text and uncertainty. A promoted idea card should include the one-sentence idea, original trigger, why it might matter, related knowledge/projects, validation questions, next experiment, and status log.
 
 ## Consolidate Mode
 

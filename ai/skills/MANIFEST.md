@@ -14,11 +14,15 @@
 - `agent-browser`
 - `ccf-paper-collection`
 - `crossdatagen-daily-research-workflow`
+- `daily-work-entry`
 - `neat-freak`
 - `openclaw-config`
 - `paper-pdf-zotero-pipeline`
 - `personal-knowledge-agent`
+- `personal-knowledge-recall`
+- `project-knowledge-preflight`
 - `research-project-memory`
+- `server-local-database-access`
 
 ## 本机安装/通用技能备份
 
@@ -43,6 +47,8 @@
 rsync -a --delete \
   --exclude='.system/' \
   --exclude='codex-primary-runtime/' \
+  --exclude='__pycache__/' \
+  --exclude='*.pyc' \
   /Users/justin/.codex/skills/ \
   ai/skills/codex-local/
 ```

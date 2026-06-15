@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Knowledge Preflight"
+  short_description: "Load prior knowledge before starting projects"
+  default_prompt: "Use $project-knowledge-preflight to prepare prior personal knowledge for this new project."
