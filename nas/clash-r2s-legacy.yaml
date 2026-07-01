@@ -1,14 +1,21 @@
----
 port: 7890
 socks-port: 7891
 redir-port: 7892
 mixed-port: 7893
 allow-lan: false
-unified-delay: true
 mode: rule
 log-level: info
+external-controller: 127.0.0.1:9090
+unified-delay: true
+sniffer:
+  sniff:
+    TLS: { ports: [443], override-destination: true }
+    HTTP: { ports: [443], override-destination: true }
+  enable: true
+  parse-pure-ip: false
+  force-dns-mapping: true
+  override-destination: true
 ipv6: false
-external-controller: 0.0.0.0:9090
 clash-for-android:
   append-system-dns: false
 profile:
@@ -18,17 +25,8 @@ experimental:
 dns:
   enable: true
   ipv6: false
-  listen: 0.0.0.0:53
-  fake-ip-filter:
-    - "*.lan"
-    - "*.srv.nintendo.net"
-    - "*.stun.playstation.net"
-    - xbox.*.microsoft.com
-    - "*.xboxlive.com"
-    - "*.teafone.com"
-    - "*.sktswe.net"
-    - rtc.goodfone.co.kr
-    - "*.chattti.com"
+  listen: 127.0.0.1:1053
+  use-hosts: true
   nameserver:
     - 119.29.29.29
     - 223.5.5.5
@@ -36,295 +34,424 @@ dns:
     - tls://223.6.6.6:853
     - tls://120.53.53.53
     - tls://1.12.12.12
+    - 119.29.29.29
+    - 223.5.5.5
+  fake-ip-range: 198.18.0.1/15
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.example"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - +.pool.ntp.org
+    - time1.cloud.tencent.com
+    - stun.*.*
+    - stun.*.*.*
+    - swscan.apple.com
+    - mesu.apple.com
+    - music.163.com
+    - "*.music.163.com"
+    - "*.126.net"
+    - musicapi.taihe.com
+    - music.taihe.com
+    - songsearch.kugou.com
+    - trackercdn.kugou.com
+    - "*.kuwo.cn"
+    - api-jooxtt.sanook.com
+    - api.joox.com
+    - y.qq.com
+    - "*.y.qq.com"
+    - streamoc.music.tc.qq.com
+    - mobileoc.music.tc.qq.com
+    - isure.stream.qqmusic.qq.com
+    - dl.stream.qqmusic.qq.com
+    - aqqmusic.tc.qq.com
+    - amobile.music.tc.qq.com
+    - localhost.ptlogin2.qq.com
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - "*.xiami.com"
+    - "*.music.migu.cn"
+    - music.migu.cn
+    - +.wotgame.cn
+    - +.wggames.cn
+    - +.wowsgame.cn
+    - +.wargaming.net
+    - "*.*.*.srv.nintendo.net"
+    - "*.*.stun.playstation.net"
+    - xbox.*.*.microsoft.com
+    - "*.*.xboxlive.com"
+    - "*.ipv6.microsoft.com"
+    - teredo.*.*.*
+    - teredo.*.*
+    - speedtest.cros.wr.pvp.net
+    - +.jjvip8.com
+    - www.douyu.com
+    - activityapi.huya.com
+    - activityapi.huya.com.w.cdngslb.com
+    - www.bilibili.com
+    - api.bilibili.com
+    - a.w.bilicdn1.com
+    - +.334837632.xyz
+  enhanced-mode: fake-ip
+  use-system-hosts: false
+  proxy-server-nameserver:
+    - udp://127.0.0.1:1053
 proxies:
-  - name: "Traffic: 14.34 GB | 100 GB"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14901
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "Expire: 2026-08-05"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14901
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1ED\U0001F1F0 香港-01"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14901
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1ED\U0001F1F0 香港-02"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14902
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1ED\U0001F1F0 香港-03"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14903
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1ED\U0001F1F0 香港-04"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14904
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1ED\U0001F1F0 香港-05"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14905
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1ED\U0001F1F0 香港-06"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14906
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1EF\U0001F1F5 日本-01"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14931
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1EF\U0001F1F5 日本-02"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14932
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1EF\U0001F1F5 日本-03"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14933
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1EF\U0001F1F5 日本-04"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14934
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1F8\U0001F1EC 狮城-01"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14941
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1F8\U0001F1EC 狮城-02"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14942
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1F8\U0001F1EC 狮城-03"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14943
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1FA\U0001F1F8 美国-01"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14911
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1FA\U0001F1F8 美国-02"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14912
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1FA\U0001F1F8 美国-03"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14913
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1FA\U0001F1F8 美国-04"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14914
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1FA\U0001F1F8 美国-05"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14915
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1FA\U0001F1F8 美国-06"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14916
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1E8\U0001F1F3 台湾-01"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14951
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1F0\U0001F1F7 韩国-01"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14965
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1F0\U0001F1F7 韩国-02"
-    server: cfe48a32-e278-11f03.334837632.xyz
-    port: 14966
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1EE\U0001F1F3 印度-01"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14921
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1F9\U0001F1ED 泰国-01"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14961
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1FB\U0001F1F3 越南-01"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14962
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1E6\U0001F1FA 悉尼-01"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14970
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1E6\U0001F1EA 迪拜-01"
-    server: cfe48a32-e278-11f02.334837632.xyz
-    port: 14972
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1EC\U0001F1E7 伦敦-01"
-    server: cfe48a32-e278-11f01.334837632.xyz
-    port: 14963
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1EC\U0001F1E7 伦敦-02"
-    server: cfe48a32-e278-11f01.334837632.xyz
-    port: 14964
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
-  - name: "\U0001F1F9\U0001F1F7 土耳其-01"
-    server: cfe48a32-e278-11f01.334837632.xyz
-    port: 14971
-    type: trojan
-    password: 1F173FCD-CE5F-087C-B314-8215CA351591
-    sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com
-    skip-cert-verify: true
-    udp: true
-    tfo: false
+  - {
+      name: 🇭🇰 香港-01,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14981,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇭🇰 香港-02,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14982,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇭🇰 香港-03,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14983,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇭🇰 香港-04,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14984,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇭🇰 香港-05,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14985,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇭🇰 香港-06,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14986,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇯🇵 日本-01,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14936,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇯🇵 日本-02,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14937,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇯🇵 日本-03,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14938,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇯🇵 日本-04,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14939,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇸🇬 狮城-01,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14946,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇸🇬 狮城-02,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14947,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇸🇬 狮城-03,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14948,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇺🇸 美国-01,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14991,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇺🇸 美国-02,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14992,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇺🇸 美国-03,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14993,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇺🇸 美国-04,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14994,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇺🇸 美国-05,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14995,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇺🇸 美国-06,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14996,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇨🇳 台湾-01,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14956,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇰🇷 韩国-01,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14974,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇰🇷 韩国-02,
+      server: cfe48a32-e278-11f03.334837632.xyz,
+      port: 14978,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇮🇳 印度-01,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14926,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇹🇭 泰国-01,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14967,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇻🇳 越南-01,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14968,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇦🇺 悉尼-01,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14975,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇦🇪 迪拜-01,
+      server: cfe48a32-e278-11f02.334837632.xyz,
+      port: 14977,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇬🇧 伦敦-01,
+      server: cfe48a32-e278-11f01.334837632.xyz,
+      port: 14969,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇬🇧 伦敦-02,
+      server: cfe48a32-e278-11f01.334837632.xyz,
+      port: 14973,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
+  - {
+      name: 🇹🇷 土耳其-01,
+      server: cfe48a32-e278-11f01.334837632.xyz,
+      port: 14976,
+      type: anytls,
+      password: fe79771abd,
+      sni: teambition-file.oss-cn-zhangjiakou.aliyuncs.com,
+      skip-cert-verify: true,
+      udp: true,
+      tfo: false,
+    }
 proxy-groups:
   - name: Proxies
     type: select
@@ -334,38 +461,46 @@ proxy-groups:
       - SG
       - TW
       - US
-      - "Traffic: 14.34 GB | 100 GB"
-      - "Expire: 2026-08-05"
-      - "\U0001F1ED\U0001F1F0 香港-01"
-      - "\U0001F1ED\U0001F1F0 香港-02"
-      - "\U0001F1ED\U0001F1F0 香港-03"
-      - "\U0001F1ED\U0001F1F0 香港-04"
-      - "\U0001F1ED\U0001F1F0 香港-05"
-      - "\U0001F1ED\U0001F1F0 香港-06"
-      - "\U0001F1EF\U0001F1F5 日本-01"
-      - "\U0001F1EF\U0001F1F5 日本-02"
-      - "\U0001F1EF\U0001F1F5 日本-03"
-      - "\U0001F1EF\U0001F1F5 日本-04"
-      - "\U0001F1F8\U0001F1EC 狮城-01"
-      - "\U0001F1F8\U0001F1EC 狮城-02"
-      - "\U0001F1F8\U0001F1EC 狮城-03"
-      - "\U0001F1FA\U0001F1F8 美国-01"
-      - "\U0001F1FA\U0001F1F8 美国-02"
-      - "\U0001F1FA\U0001F1F8 美国-03"
-      - "\U0001F1FA\U0001F1F8 美国-04"
-      - "\U0001F1FA\U0001F1F8 美国-05"
-      - "\U0001F1FA\U0001F1F8 美国-06"
-      - "\U0001F1E8\U0001F1F3 台湾-01"
-      - "\U0001F1F0\U0001F1F7 韩国-01"
-      - "\U0001F1F0\U0001F1F7 韩国-02"
-      - "\U0001F1EE\U0001F1F3 印度-01"
-      - "\U0001F1F9\U0001F1ED 泰国-01"
-      - "\U0001F1FB\U0001F1F3 越南-01"
-      - "\U0001F1E6\U0001F1FA 悉尼-01"
-      - "\U0001F1E6\U0001F1EA 迪拜-01"
-      - "\U0001F1EC\U0001F1E7 伦敦-01"
-      - "\U0001F1EC\U0001F1E7 伦敦-02"
-      - "\U0001F1F9\U0001F1F7 土耳其-01"
+      - 🇭🇰 香港-01
+      - 🇭🇰 香港-02
+      - 🇭🇰 香港-03
+      - 🇭🇰 香港-04
+      - 🇭🇰 香港-05
+      - 🇭🇰 香港-06
+      - 🇯🇵 日本-01
+      - 🇯🇵 日本-02
+      - 🇯🇵 日本-03
+      - 🇯🇵 日本-04
+      - 🇸🇬 狮城-01
+      - 🇸🇬 狮城-02
+      - 🇸🇬 狮城-03
+      - 🇺🇸 美国-01
+      - 🇺🇸 美国-02
+      - 🇺🇸 美国-03
+      - 🇺🇸 美国-04
+      - 🇺🇸 美国-05
+      - 🇺🇸 美国-06
+      - 🇨🇳 台湾-01
+      - 🇰🇷 韩国-01
+      - 🇰🇷 韩国-02
+      - 🇮🇳 印度-01
+      - 🇹🇭 泰国-01
+      - 🇻🇳 越南-01
+      - 🇦🇺 悉尼-01
+      - 🇦🇪 迪拜-01
+      - 🇬🇧 伦敦-01
+      - 🇬🇧 伦敦-02
+      - 🇹🇷 土耳其-01
+  - name: Cloudflare
+    type: select
+    proxies:
+      - Proxies
+      - DIRECT
+      - HK
+      - JP
+      - SG
+      - TW
+      - US
   - name: YouTube
     type: select
     proxies:
@@ -481,54 +616,16 @@ proxy-groups:
       - SG
       - TW
       - US
+  - name: Apple Push
+    type: select
+    proxies:
+      - Proxies
+      - DIRECT
   - name: Apple
     type: select
     proxies:
       - Proxies
       - DIRECT
-      - HK
-      - JP
-      - SG
-      - TW
-      - US
-  - name: ACM
-    type: select
-    proxies: &1
-      - Proxies
-      - DIRECT
-      - HK
-      - JP
-      - SG
-      - TW
-      - US
-  - name: IEEE
-    type: select
-    proxies: *1
-  - name: X
-    type: select
-    proxies: *1
-  - name: Developer
-    type: select
-    proxies: *1
-  - name: LAN-Devices
-    type: select
-    proxies:
-      - DIRECT
-  - name: Local-Upstream
-    type: select
-    proxies:
-      - DIRECT
-      - Proxies
-      - HK
-      - JP
-      - SG
-      - TW
-      - US
-  - name: CN-Apps
-    type: select
-    proxies:
-      - DIRECT
-      - Proxies
       - HK
       - JP
       - SG
@@ -542,122 +639,44 @@ proxy-groups:
   - name: HK
     type: select
     proxies:
-      - "\U0001F1ED\U0001F1F0 香港-01"
-      - "\U0001F1ED\U0001F1F0 香港-02"
-      - "\U0001F1ED\U0001F1F0 香港-03"
-      - "\U0001F1ED\U0001F1F0 香港-04"
-      - "\U0001F1ED\U0001F1F0 香港-05"
-      - "\U0001F1ED\U0001F1F0 香港-06"
+      - 🇭🇰 香港-01
+      - 🇭🇰 香港-02
+      - 🇭🇰 香港-03
+      - 🇭🇰 香港-04
+      - 🇭🇰 香港-05
+      - 🇭🇰 香港-06
   - name: JP
     type: select
     proxies:
-      - "\U0001F1EF\U0001F1F5 日本-01"
-      - "\U0001F1EF\U0001F1F5 日本-02"
-      - "\U0001F1EF\U0001F1F5 日本-03"
-      - "\U0001F1EF\U0001F1F5 日本-04"
+      - 🇯🇵 日本-01
+      - 🇯🇵 日本-02
+      - 🇯🇵 日本-03
+      - 🇯🇵 日本-04
   - name: SG
     type: select
     proxies:
-      - "\U0001F1F8\U0001F1EC 狮城-01"
-      - "\U0001F1F8\U0001F1EC 狮城-02"
-      - "\U0001F1F8\U0001F1EC 狮城-03"
+      - 🇸🇬 狮城-01
+      - 🇸🇬 狮城-02
+      - 🇸🇬 狮城-03
   - name: TW
     type: select
     proxies:
-      - "\U0001F1E8\U0001F1F3 台湾-01"
+      - 🇨🇳 台湾-01
   - name: US
     type: select
     proxies:
-      - "\U0001F1FA\U0001F1F8 美国-01"
-      - "\U0001F1FA\U0001F1F8 美国-02"
-      - "\U0001F1FA\U0001F1F8 美国-03"
-      - "\U0001F1FA\U0001F1F8 美国-04"
-      - "\U0001F1FA\U0001F1F8 美国-05"
-      - "\U0001F1FA\U0001F1F8 美国-06"
+      - 🇺🇸 美国-01
+      - 🇺🇸 美国-02
+      - 🇺🇸 美国-03
+      - 🇺🇸 美国-04
+      - 🇺🇸 美国-05
+      - 🇺🇸 美国-06
+hosts:
+  cfe48a32-e278-11f01.334837632.xyz: ec9773ec-6946-11f11.334837632.xyz
+  cfe48a32-e278-11f02.334837632.xyz: ec9773ec-6946-11f12.334837632.xyz
+  cfe48a32-e278-11f03.334837632.xyz: ec9773ec-6946-11f13.334837632.xyz
 rules:
-  - DOMAIN-SUFFIX,local,LAN-Devices
-  - IP-CIDR,192.168.0.0/16,LAN-Devices,no-resolve
-  - IP-CIDR,10.0.0.0/8,LAN-Devices,no-resolve
-  - IP-CIDR,172.16.0.0/12,LAN-Devices,no-resolve
-  - IP-CIDR,127.0.0.0/8,LAN-Devices,no-resolve
-  - IP-CIDR,100.64.0.0/10,LAN-Devices,no-resolve
-  - IP-CIDR6,::1/128,LAN-Devices,no-resolve
-  - IP-CIDR6,fc00::/7,LAN-Devices,no-resolve
-  - IP-CIDR6,fe80::/10,LAN-Devices,no-resolve
-  - IP-CIDR6,fd00::/8,LAN-Devices,no-resolve
-  - DOMAIN-SUFFIX,local-upstream.placeholder.invalid,Local-Upstream
-  - DOMAIN-SUFFIX,music.163.com,CN-Apps
-  - DOMAIN-SUFFIX,music.126.net,CN-Apps
-  - DOMAIN-SUFFIX,api.iplay.163.com,CN-Apps
-  - DOMAIN-SUFFIX,netease.com,CN-Apps
-  - DOMAIN-SUFFIX,163.com,CN-Apps
-  - DOMAIN-SUFFIX,126.net,CN-Apps
-  - DOMAIN-SUFFIX,127.net,CN-Apps
-  - DOMAIN-SUFFIX,wechat.com,CN-Apps
-  - DOMAIN-SUFFIX,weixin.qq.com,CN-Apps
-  - DOMAIN-SUFFIX,wx.qq.com,CN-Apps
-  - DOMAIN-SUFFIX,servicewechat.com,CN-Apps
-  - DOMAIN-SUFFIX,tenpay.com,CN-Apps
-  - DOMAIN-SUFFIX,qq.com,CN-Apps
-  - DOMAIN-SUFFIX,qpic.cn,CN-Apps
-  - DOMAIN-SUFFIX,gtimg.com,CN-Apps
-  - DOMAIN-SUFFIX,myqcloud.com,CN-Apps
-  - DOMAIN-SUFFIX,alipay.com,CN-Apps
-  - DOMAIN-SUFFIX,alicdn.com,CN-Apps
-  - DOMAIN-SUFFIX,aliyun.com,CN-Apps
-  - DOMAIN-SUFFIX,taobao.com,CN-Apps
-  - DOMAIN-SUFFIX,tmall.com,CN-Apps
-  - DOMAIN-SUFFIX,jd.com,CN-Apps
-  - DOMAIN-SUFFIX,mi.com,CN-Apps
-  - DOMAIN-SUFFIX,xiaomi.com,CN-Apps
-  - DOMAIN-SUFFIX,bilibili.com,CN-Apps
-  - DOMAIN-SUFFIX,biliapi.net,CN-Apps
-  - DOMAIN-SUFFIX,douyin.com,CN-Apps
-  - DOMAIN-SUFFIX,amemv.com,CN-Apps
-  - DOMAIN-SUFFIX,byteimg.com,CN-Apps
-  - DOMAIN-SUFFIX,bdstatic.com,CN-Apps
-  - DOMAIN-SUFFIX,baidu.com,CN-Apps
-  - DOMAIN-SUFFIX,amap.com,CN-Apps
-  - DOMAIN-SUFFIX,autonavi.com,CN-Apps
-  - DOMAIN-SUFFIX,acm.org,ACM
-  - DOMAIN-SUFFIX,acm.org.cn,ACM
-  - DOMAIN-SUFFIX,ieee.org,IEEE
-  - DOMAIN-SUFFIX,ieee.com,IEEE
-  - DOMAIN-SUFFIX,ieeecomputer.org,IEEE
-  - DOMAIN-SUFFIX,computer.org,IEEE
-  - DOMAIN-SUFFIX,x.com,X
-  - DOMAIN-SUFFIX,twitter.com,X
-  - DOMAIN-SUFFIX,t.co,X
-  - DOMAIN-SUFFIX,twimg.com,X
-  - DOMAIN-SUFFIX,ads-twitter.com,X
-  - DOMAIN-SUFFIX,pscp.tv,X
-  - DOMAIN-SUFFIX,periscope.tv,X
-  - DOMAIN-SUFFIX,github.com,Developer
-  - DOMAIN-SUFFIX,github.io,Developer
-  - DOMAIN-SUFFIX,githubassets.com,Developer
-  - DOMAIN-SUFFIX,githubusercontent.com,Developer
-  - DOMAIN-SUFFIX,ghcr.io,Developer
-  - DOMAIN-SUFFIX,gitlab.com,Developer
-  - DOMAIN-SUFFIX,docker.com,Developer
-  - DOMAIN-SUFFIX,docker.io,Developer
-  - DOMAIN-SUFFIX,registry-1.docker.io,Developer
-  - DOMAIN-SUFFIX,npmjs.com,Developer
-  - DOMAIN-SUFFIX,npmjs.org,Developer
-  - DOMAIN-SUFFIX,pypi.org,Developer
-  - DOMAIN-SUFFIX,pythonhosted.org,Developer
-  - DOMAIN-SUFFIX,files.pythonhosted.org,Developer
-  - DOMAIN-SUFFIX,homebrew.org,Developer
-  - DOMAIN-SUFFIX,brew.sh,Developer
-  - DOMAIN-SUFFIX,rubygems.org,Developer
-  - DOMAIN-SUFFIX,jetbrains.com,Developer
-  - DOMAIN-SUFFIX,visualstudio.com,Developer
-  - DOMAIN-SUFFIX,marketplace.visualstudio.com,Developer
-  - DOMAIN-SUFFIX,vscode.dev,Developer
-  - DOMAIN-SUFFIX,golang.org,Developer
-  - DOMAIN-SUFFIX,go.dev,Developer
-  - DOMAIN-SUFFIX,pkg.go.dev,Developer
-  - DOMAIN-SUFFIX,rust-lang.org,Developer
-  - DOMAIN-SUFFIX,crates.io,Developer
+  - DOMAIN-SUFFIX,ping0.cc,DIRECT
   - DOMAIN,app.adjust.com,DIRECT
   - DOMAIN,app.appsflyer.com,DIRECT
   - DOMAIN,bdtj.tagtic.cn,DIRECT
@@ -674,6 +693,597 @@ rules:
   - DOMAIN,analytics.strava.com,DIRECT
   - DOMAIN,msg.umeng.com,DIRECT
   - DOMAIN,msg.umengcloud.com,DIRECT
+  - DOMAIN-SUFFIX,steambroadcast.akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,steamcdn-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,steamcommunity-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,steampipe.akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,steamstore-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,steamusercontent-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,steamuserimages-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,steamvideo-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,cdn-ali.content.steamchina.com,DIRECT
+  - DOMAIN-SUFFIX,st.dl.bscstorage.net,DIRECT
+  - DOMAIN-SUFFIX,st.dl.eccdnx.com,DIRECT
+  - DOMAIN-SUFFIX,st.dl.pinyuncloud.com,DIRECT
+  - DOMAIN-SUFFIX,steampipe.steamcontent.tnkjmec.com,DIRECT
+  - DOMAIN-SUFFIX,dl.steam.clngaa.com,DIRECT
+  - DOMAIN-SUFFIX,dl.steam.ksyna.com,DIRECT
+  - DOMAIN-SUFFIX,cdn-qc.content.steamchina.com,DIRECT
+  - DOMAIN-SUFFIX,csgo.wmsj.cn,DIRECT
+  - DOMAIN-SUFFIX,dota2.wmsj.cn,DIRECT
+  - DOMAIN-SUFFIX,wmsjsteam.com,DIRECT
+  - DOMAIN-SUFFIX,cdn-ws.content.steamchina.com,DIRECT
+  - DOMAIN-SUFFIX,steampowered.com.8686c.com,DIRECT
+  - DOMAIN-SUFFIX,steamstatic.com.8686c.com,DIRECT
+  - DOMAIN,csgo.wmsj.cn,DIRECT
+  - DOMAIN,dl.steam.clngaa.com,DIRECT
+  - DOMAIN,dl.steam.ksyna.com,DIRECT
+  - DOMAIN,dota2.wmsj.cn,DIRECT
+  - DOMAIN,st.dl.bscstorage.net,DIRECT
+  - DOMAIN,st.dl.eccdnx.com,DIRECT
+  - DOMAIN,st.dl.pinyuncloud.com,DIRECT
+  - DOMAIN,steampipe.steamcontent.tnkjmec.com,DIRECT
+  - DOMAIN,steampowered.com.8686c.com,DIRECT
+  - DOMAIN,steamstatic.com.8686c.com,DIRECT
+  - DOMAIN,wmsjsteam.com,DIRECT
+  - DOMAIN,xz.pphimalayanrt.com,DIRECT
+  - DOMAIN-SUFFIX,cm.steampowered.com,DIRECT
+  - DOMAIN-SUFFIX,steamchina.com,DIRECT
+  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+  - DOMAIN-SUFFIX,steamserver.net,DIRECT
+  - DOMAIN-SUFFIX,steamusercontent.com,DIRECT
+  - DOMAIN,steammobile.akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,steamcontent.tnkjmec.com,DIRECT
+  - DOMAIN,004430.xyz,DIRECT
+  - DOMAIN,021912.xyz,DIRECT
+  - DOMAIN,1337.abcvg.info,DIRECT
+  - DOMAIN,6ahddutb1ucc3cp.ru,DIRECT
+  - DOMAIN,aboutbeautifulgallopinghorsesinthegreenpasture.online,DIRECT
+  - DOMAIN,admin.52ywp.com,DIRECT
+  - DOMAIN,anime-tracker.aruku.kro.kr,DIRECT
+  - DOMAIN,archive.torrentonline.cc,DIRECT
+  - DOMAIN,banananetwork.qzz.io,DIRECT
+  - DOMAIN,bittorrent-tracker.e-n-c-r-y-p-t.net,DIRECT
+  - DOMAIN,bt.okmp3.ru,DIRECT
+  - DOMAIN,bt1.archive.org,DIRECT
+  - DOMAIN,bt2.archive.org,DIRECT
+  - DOMAIN,bvarf.tracker.sh,DIRECT
+  - DOMAIN,cerf.cs.umd.edu,DIRECT
+  - DOMAIN,coeus.torrentonline.cc,DIRECT
+  - DOMAIN,evan.im,DIRECT
+  - DOMAIN,exodus.desync.com,DIRECT
+  - DOMAIN,ipv4announce.sktorrent.eu,DIRECT
+  - DOMAIN,leet-tracker.moe,DIRECT
+  - DOMAIN,martin-gebhardt.eu,DIRECT
+  - DOMAIN,ns575949.ip-51-222-82.net,DIRECT
+  - DOMAIN,nyaa.tracker.wf,DIRECT
+  - DOMAIN,obey.torrentonline.cc,DIRECT
+  - DOMAIN,open.demonii.com,DIRECT
+  - DOMAIN,open.demonoid.ch,DIRECT
+  - DOMAIN,open.ftorrent.com,DIRECT
+  - DOMAIN,open.stealth.si,DIRECT
+  - DOMAIN,open.tracker.ink,DIRECT
+  - DOMAIN,opentor.org,DIRECT
+  - DOMAIN,orgtgju.org,DIRECT
+  - DOMAIN,p4p.arenabg.com,DIRECT
+  - DOMAIN,pybittrack.retiolus.net,DIRECT
+  - DOMAIN,rekcart.duckdns.org,DIRECT
+  - DOMAIN,retracker.hotplug.ru,DIRECT
+  - DOMAIN,seedpeer.net,DIRECT
+  - DOMAIN,shahidrazi.online,DIRECT
+  - DOMAIN,t.213891.xyz,DIRECT
+  - DOMAIN,t.overflow.biz,DIRECT
+  - DOMAIN,torrent.tracker.durukanbal.com,DIRECT
+  - DOMAIN,torrentclub.online,DIRECT
+  - DOMAIN,torrents.tmtime.dev,DIRECT
+  - DOMAIN,torrentsmd.com,DIRECT
+  - DOMAIN,tr.abiir.top,DIRECT
+  - DOMAIN,tr.highstar.shop,DIRECT
+  - DOMAIN,tr.kxmp.cf,DIRECT
+  - DOMAIN,tr.nyacat.pw,DIRECT
+  - DOMAIN,tr.zukizuki.org,DIRECT
+  - DOMAIN,tr4ck3r.duckdns.org,DIRECT
+  - DOMAIN,tracker-udp.gbitt.info,DIRECT
+  - DOMAIN,tracker.004430.xyz,DIRECT
+  - DOMAIN,tracker.1h.is,DIRECT
+  - DOMAIN,tracker.7471.top,DIRECT
+  - DOMAIN,tracker.aruku.ovh,DIRECT
+  - DOMAIN,tracker.auctor.tv,DIRECT
+  - DOMAIN,tracker.bittor.pw,DIRECT
+  - DOMAIN,tracker.bluefrog.pw,DIRECT
+  - DOMAIN,tracker.breizh.pm,DIRECT
+  - DOMAIN,tracker.bt4g.com,DIRECT
+  - DOMAIN,tracker.corpscorp.online,DIRECT
+  - DOMAIN,tracker.ddunlimited.net,DIRECT
+  - DOMAIN,tracker.dhitechnical.com,DIRECT
+  - DOMAIN,tracker.dler.com,DIRECT
+  - DOMAIN,tracker.dler.org,DIRECT
+  - DOMAIN,tracker.ducks.party,DIRECT
+  - DOMAIN,tracker.filemail.com,DIRECT
+  - DOMAIN,tracker.flatuslifir.is,DIRECT
+  - DOMAIN,tracker.fnix.net,DIRECT
+  - DOMAIN,tracker.gcrenwp.top,DIRECT
+  - DOMAIN,tracker.gmi.gd,DIRECT
+  - DOMAIN,tracker.hismz.cn,DIRECT
+  - DOMAIN,tracker.iperson.xyz,DIRECT
+  - DOMAIN,tracker.kuroy.me,DIRECT
+  - DOMAIN,tracker.leechshield.link,DIRECT
+  - DOMAIN,tracker.manager.itislove.cz,DIRECT
+  - DOMAIN,tracker.manager.v6.navy,DIRECT
+  - DOMAIN,tracker.mywaifu.best,DIRECT
+  - DOMAIN,tracker.nekomi.cn,DIRECT
+  - DOMAIN,tracker.nyaa.vc,DIRECT
+  - DOMAIN,tracker.opentorrent.top,DIRECT
+  - DOMAIN,tracker.opentrackr.org,DIRECT
+  - DOMAIN,tracker.openwebtorrent.com,DIRECT
+  - DOMAIN,tracker.playground.ru,DIRECT
+  - DOMAIN,tracker.plx.im,DIRECT
+  - DOMAIN,tracker.pmman.tech,DIRECT
+  - DOMAIN,tracker.privateseedbox.xyz,DIRECT
+  - DOMAIN,tracker.publictracker.xyz,DIRECT
+  - DOMAIN,tracker.qingwapt.org,DIRECT
+  - DOMAIN,tracker.qu.ax,DIRECT
+  - DOMAIN,tracker.renfei.net,DIRECT
+  - DOMAIN,tracker.sharebro.in,DIRECT
+  - DOMAIN,tracker.skyts.net,DIRECT
+  - DOMAIN,tracker.startwork.cv,DIRECT
+  - DOMAIN,tracker.t-1.org,DIRECT
+  - DOMAIN,tracker.theoks.net,DIRECT
+  - DOMAIN,tracker.torrent.eu.org,DIRECT
+  - DOMAIN,tracker.tritan.gg,DIRECT
+  - DOMAIN,tracker.tryhackx.org,DIRECT
+  - DOMAIN,tracker.waaa.moe,DIRECT
+  - DOMAIN,tracker.wildkat.net,DIRECT
+  - DOMAIN,tracker.xn--djrq4gl4hvoi.top,DIRECT
+  - DOMAIN,tracker.yemekyedim.com,DIRECT
+  - DOMAIN,tracker.yume-hatsuyuki.moe,DIRECT
+  - DOMAIN,tracker.zhuqiy.com,DIRECT
+  - DOMAIN,tracker.zhuqiy.dgj055.icu,DIRECT
+  - DOMAIN,tracker1.520.jp,DIRECT
+  - DOMAIN,tracker1.itzmx.com,DIRECT
+  - DOMAIN,tracker2.dler.org,DIRECT
+  - DOMAIN,tracker2.itzmx.com,DIRECT
+  - DOMAIN,tracker3.itzmx.com,DIRECT
+  - DOMAIN,tracker4.itzmx.com,DIRECT
+  - DOMAIN,uabits.today,DIRECT
+  - DOMAIN,udp.tracker.projectk.org,DIRECT
+  - DOMAIN,v6.vito-tracker.space,DIRECT
+  - DOMAIN,whybother.torrentonline.cc,DIRECT
+  - DOMAIN,www.wareztorrent.com,DIRECT
+  - DOMAIN,yuptracker-eu.gaijinent.com,DIRECT
+  - DOMAIN,zer0day.ch,DIRECT
+  - DOMAIN-SUFFIX,1ptba.com,DIRECT
+  - DOMAIN-SUFFIX,2xfree.org,DIRECT
+  - DOMAIN-SUFFIX,52pt.site,DIRECT
+  - DOMAIN-SUFFIX,aidoru-online.me,DIRECT
+  - DOMAIN-SUFFIX,alpharatio.cc,DIRECT
+  - DOMAIN-SUFFIX,animebytes.tv,DIRECT
+  - DOMAIN-SUFFIX,animetorrents.me,DIRECT
+  - DOMAIN-SUFFIX,anthelion.me,DIRECT
+  - DOMAIN-SUFFIX,asiancinema.me,DIRECT
+  - DOMAIN-SUFFIX,audiences.me,DIRECT
+  - DOMAIN-SUFFIX,avgv.cc,DIRECT
+  - DOMAIN-SUFFIX,avistaz.to,DIRECT
+  - DOMAIN-SUFFIX,awesome-hd.me,DIRECT
+  - DOMAIN-SUFFIX,beitai.pt,DIRECT
+  - DOMAIN-SUFFIX,beyond-hd.me,DIRECT
+  - DOMAIN-SUFFIX,bibliotik.me,DIRECT
+  - DOMAIN-SUFFIX,bittorrent.com,DIRECT
+  - DOMAIN-SUFFIX,blutopia.cc,DIRECT
+  - DOMAIN-SUFFIX,broadcasthe.net,DIRECT
+  - DOMAIN-SUFFIX,bt.byr.cn,DIRECT
+  - DOMAIN-SUFFIX,bt.neu6.edu.cn,DIRECT
+  - DOMAIN-SUFFIX,btschool.club,DIRECT
+  - DOMAIN-SUFFIX,bwtorrents.tv,DIRECT
+  - DOMAIN-SUFFIX,byr.pt,DIRECT
+  - DOMAIN-SUFFIX,ccfbits.org,DIRECT
+  - DOMAIN-SUFFIX,cgpeers.com,DIRECT
+  - DOMAIN-SUFFIX,chdbits.co,DIRECT
+  - DOMAIN-SUFFIX,cinemageddon.net,DIRECT
+  - DOMAIN-SUFFIX,cinematik.net,DIRECT
+  - DOMAIN-SUFFIX,cinemaz.to,DIRECT
+  - DOMAIN-SUFFIX,classix-unlimited.co.uk,DIRECT
+  - DOMAIN-SUFFIX,concertos.live,DIRECT
+  - DOMAIN-SUFFIX,creditracker.net,DIRECT
+  - DOMAIN-SUFFIX,dicmusic.club,DIRECT
+  - DOMAIN-SUFFIX,discfan.net,DIRECT
+  - DOMAIN-SUFFIX,dxdhd.com,DIRECT
+  - DOMAIN-SUFFIX,eastgame.org,DIRECT
+  - DOMAIN-SUFFIX,empornium.me,DIRECT
+  - DOMAIN-SUFFIX,et8.org,DIRECT
+  - DOMAIN-SUFFIX,exoticaz.to,DIRECT
+  - DOMAIN-SUFFIX,extremlymtorrents.ws,DIRECT
+  - DOMAIN-SUFFIX,filelist.io,DIRECT
+  - DOMAIN-SUFFIX,gainbound.net,DIRECT
+  - DOMAIN-SUFFIX,gazellegames.net,DIRECT
+  - DOMAIN-SUFFIX,gfxpeers.net,DIRECT
+  - DOMAIN-SUFFIX,hd-space.org,DIRECT
+  - DOMAIN-SUFFIX,hd-torrents.org,DIRECT
+  - DOMAIN-SUFFIX,hd4.xyz,DIRECT
+  - DOMAIN-SUFFIX,hd4fans.org,DIRECT
+  - DOMAIN-SUFFIX,hdarea.co,DIRECT
+  - DOMAIN-SUFFIX,hdatmos.club,DIRECT
+  - DOMAIN-SUFFIX,hdbd.us,DIRECT
+  - DOMAIN-SUFFIX,hdbits.org,DIRECT
+  - DOMAIN-SUFFIX,hdchina.org,DIRECT
+  - DOMAIN-SUFFIX,hdcity.city,DIRECT
+  - DOMAIN-SUFFIX,hddolby.com,DIRECT
+  - DOMAIN-SUFFIX,hdfans.org,DIRECT
+  - DOMAIN-SUFFIX,hdhome.org,DIRECT
+  - DOMAIN-SUFFIX,hdpost.top,DIRECT
+  - DOMAIN-SUFFIX,hdroute.org,DIRECT
+  - DOMAIN-SUFFIX,hdsky.me,DIRECT
+  - DOMAIN-SUFFIX,hdstreet.club,DIRECT
+  - DOMAIN-SUFFIX,hdtime.org,DIRECT
+  - DOMAIN-SUFFIX,hdupt.com,DIRECT
+  - DOMAIN-SUFFIX,hdzone.me,DIRECT
+  - DOMAIN-SUFFIX,hhanclub.top,DIRECT
+  - DOMAIN-SUFFIX,hitpt.com,DIRECT
+  - DOMAIN-SUFFIX,hitpt.org,DIRECT
+  - DOMAIN-SUFFIX,hudbt.hust.edu.cn,DIRECT
+  - DOMAIN-SUFFIX,icetorrent.org,DIRECT
+  - DOMAIN-SUFFIX,iptorrents.com,DIRECT
+  - DOMAIN-SUFFIX,j99.info,DIRECT
+  - DOMAIN-SUFFIX,joyhd.net,DIRECT
+  - DOMAIN-SUFFIX,jpopsuki.eu,DIRECT
+  - DOMAIN-SUFFIX,kamept.com,DIRECT
+  - DOMAIN-SUFFIX,karagarga.in,DIRECT
+  - DOMAIN-SUFFIX,keepfrds.com,DIRECT
+  - DOMAIN-SUFFIX,landof.tv,DIRECT
+  - DOMAIN-SUFFIX,leaguehd.com,DIRECT
+  - DOMAIN-SUFFIX,lemonhd.org,DIRECT
+  - DOMAIN-SUFFIX,lztr.me,DIRECT
+  - DOMAIN-SUFFIX,m-team.cc,DIRECT
+  - DOMAIN-SUFFIX,madsrevolution.net,DIRECT
+  - DOMAIN-SUFFIX,moecat.best,DIRECT
+  - DOMAIN-SUFFIX,morethan.tv,DIRECT
+  - DOMAIN-SUFFIX,msg.vg,DIRECT
+  - DOMAIN-SUFFIX,myanonamouse.net,DIRECT
+  - DOMAIN-SUFFIX,nanyangpt.com,DIRECT
+  - DOMAIN-SUFFIX,ncore.cc,DIRECT
+  - DOMAIN-SUFFIX,nebulance.io,DIRECT
+  - DOMAIN-SUFFIX,nicept.net,DIRECT
+  - DOMAIN-SUFFIX,npupt.com,DIRECT
+  - DOMAIN-SUFFIX,nwsuaf6.edu.cn,DIRECT
+  - DOMAIN-SUFFIX,open.cd,DIRECT
+  - DOMAIN-SUFFIX,oppaiti.me,DIRECT
+  - DOMAIN-SUFFIX,orpheus.network,DIRECT
+  - DOMAIN-SUFFIX,ourbits.club,DIRECT
+  - DOMAIN-SUFFIX,passthepopcorn.me,DIRECT
+  - DOMAIN-SUFFIX,pornbits.net,DIRECT
+  - DOMAIN-SUFFIX,privatehd.to,DIRECT
+  - DOMAIN-SUFFIX,pterclub.com,DIRECT
+  - DOMAIN-SUFFIX,pthome.net,DIRECT
+  - DOMAIN-SUFFIX,ptsbao.club,DIRECT
+  - DOMAIN-SUFFIX,pttime.org,DIRECT
+  - DOMAIN-SUFFIX,pussytorrents.org,DIRECT
+  - DOMAIN-SUFFIX,qingwa.pro,DIRECT
+  - DOMAIN-SUFFIX,redacted.ch,DIRECT
+  - DOMAIN-SUFFIX,sdbits.org,DIRECT
+  - DOMAIN-SUFFIX,sharkpt.net,DIRECT
+  - DOMAIN-SUFFIX,sjtu.edu.cn,DIRECT
+  - DOMAIN-SUFFIX,skyey2.com,DIRECT
+  - DOMAIN-SUFFIX,soulvoice.club,DIRECT
+  - DOMAIN-SUFFIX,springsunday.net,DIRECT
+  - DOMAIN-SUFFIX,tju.pt,DIRECT
+  - DOMAIN-SUFFIX,tjupt.org,DIRECT
+  - DOMAIN-SUFFIX,torrentday.com,DIRECT
+  - DOMAIN-SUFFIX,torrentleech.org,DIRECT
+  - DOMAIN-SUFFIX,torrentseeds.org,DIRECT
+  - DOMAIN-SUFFIX,totheglory.im,DIRECT
+  - DOMAIN-SUFFIX,trontv.com,DIRECT
+  - DOMAIN-SUFFIX,u2.dmhy.org,DIRECT
+  - DOMAIN-SUFFIX,uhdbits.org,DIRECT
+  - DOMAIN-SUFFIX,xauat6.edu.cn,DIRECT
+  - DOMAIN-KEYWORD,announce,DIRECT
+  - DOMAIN-KEYWORD,chdbits,DIRECT
+  - DOMAIN-KEYWORD,m-team,DIRECT
+  - DOMAIN-KEYWORD,torrent,DIRECT
+  - IP-CIDR,207.241.226.111/32,DIRECT
+  - IP-CIDR,207.241.231.226/32,DIRECT
+  - IP-CIDR,52.58.128.163/32,DIRECT
+  - DOMAIN-SUFFIX,12diasdepresentesdeitunes.com,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.cl,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.co,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.co.cr,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.co.ni,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.co.ve,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.com,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.com.co,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.com.hn,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.com.ni,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.com.ve,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.cr,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.gt,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.hn,DIRECT
+  - DOMAIN-SUFFIX,12diasderegalosdeitunes.pe,DIRECT
+  - DOMAIN-SUFFIX,12joursdecadeauxdeitunes.com,DIRECT
+  - DOMAIN-SUFFIX,aaplimg.com,DIRECT
+  - DOMAIN-SUFFIX,app-store.wang,DIRECT
+  - DOMAIN-SUFFIX,appe-store.com,DIRECT
+  - DOMAIN-SUFFIX,apple-appstore.cn,DIRECT
+  - DOMAIN-SUFFIX,apple-icloud.cn,DIRECT
+  - DOMAIN-SUFFIX,apple-itunes.cn,DIRECT
+  - DOMAIN-SUFFIX,apple-pay.com,DIRECT
+  - DOMAIN-SUFFIX,apple-pay.rs,DIRECT
+  - DOMAIN-SUFFIX,apple-pay.wang,DIRECT
+  - DOMAIN-SUFFIX,appleaccount.net,DIRECT
+  - DOMAIN-SUFFIX,appleappstore.cn,DIRECT
+  - DOMAIN-SUFFIX,appleappstore.net,DIRECT
+  - DOMAIN-SUFFIX,appleappstore.tv,DIRECT
+  - DOMAIN-SUFFIX,appledarwin.com,DIRECT
+  - DOMAIN-SUFFIX,appledarwin.net,DIRECT
+  - DOMAIN-SUFFIX,appleicloud.cn,DIRECT
+  - DOMAIN-SUFFIX,appleid-applemx.com,DIRECT
+  - DOMAIN-SUFFIX,appleid-applemx.us,DIRECT
+  - DOMAIN-SUFFIX,appleid-iclou.com,DIRECT
+  - DOMAIN-SUFFIX,appleid-uk.us,DIRECT
+  - DOMAIN-SUFFIX,appleid.berlin,DIRECT
+  - DOMAIN-SUFFIX,appleid.com,DIRECT
+  - DOMAIN-SUFFIX,appleid.hamburg,DIRECT
+  - DOMAIN-SUFFIX,appleid.hk,DIRECT
+  - DOMAIN-SUFFIX,applemx-icloud.com,DIRECT
+  - DOMAIN-SUFFIX,appleone.audio,DIRECT
+  - DOMAIN-SUFFIX,appleone.blog,DIRECT
+  - DOMAIN-SUFFIX,appleone.chat,DIRECT
+  - DOMAIN-SUFFIX,appleone.cloud,DIRECT
+  - DOMAIN-SUFFIX,appleone.club,DIRECT
+  - DOMAIN-SUFFIX,appleone.community,DIRECT
+  - DOMAIN-SUFFIX,appleone.film,DIRECT
+  - DOMAIN-SUFFIX,appleone.guide,DIRECT
+  - DOMAIN-SUFFIX,appleone.host,DIRECT
+  - DOMAIN-SUFFIX,appleone.space,DIRECT
+  - DOMAIN-SUFFIX,appleone.tech,DIRECT
+  - DOMAIN-SUFFIX,appleone.website,DIRECT
+  - DOMAIN-SUFFIX,applepay.berlin,DIRECT
+  - DOMAIN-SUFFIX,applepay.co.rs,DIRECT
+  - DOMAIN-SUFFIX,applepay.com.tw,DIRECT
+  - DOMAIN-SUFFIX,applepay.hamburg,DIRECT
+  - DOMAIN-SUFFIX,applepay.hk,DIRECT
+  - DOMAIN-SUFFIX,applepay.info,DIRECT
+  - DOMAIN-SUFFIX,applepay.jp,DIRECT
+  - DOMAIN-SUFFIX,applepay.rs,DIRECT
+  - DOMAIN-SUFFIX,applepay.tv,DIRECT
+  - DOMAIN-SUFFIX,applepaycash.cn,DIRECT
+  - DOMAIN-SUFFIX,applepaycash.com.cn,DIRECT
+  - DOMAIN-SUFFIX,applepaycash.net,DIRECT
+  - DOMAIN-SUFFIX,applepaycash.tv,DIRECT
+  - DOMAIN-SUFFIX,applepaymerchantsupplies.info,DIRECT
+  - DOMAIN-SUFFIX,applepaysupplies.berlin,DIRECT
+  - DOMAIN-SUFFIX,applepaysupplies.cn,DIRECT
+  - DOMAIN-SUFFIX,applepaysupplies.com,DIRECT
+  - DOMAIN-SUFFIX,applepaysupplies.com.cn,DIRECT
+  - DOMAIN-SUFFIX,applepaysupplies.info,DIRECT
+  - DOMAIN-SUFFIX,applepaysupplies.net,DIRECT
+  - DOMAIN-SUFFIX,applepaysupplies.tv,DIRECT
+  - DOMAIN-SUFFIX,applewallet.com,DIRECT
+  - DOMAIN-SUFFIX,applewallet.tv,DIRECT
+  - DOMAIN-SUFFIX,appsto.re,DIRECT
+  - DOMAIN-SUFFIX,appstore.co.id,DIRECT
+  - DOMAIN-SUFFIX,appstore.com,DIRECT
+  - DOMAIN-SUFFIX,appstore.hk,DIRECT
+  - DOMAIN-SUFFIX,appstore.my,DIRECT
+  - DOMAIN-SUFFIX,appstore.ph,DIRECT
+  - DOMAIN-SUFFIX,appstoreapple.cn,DIRECT
+  - DOMAIN-SUFFIX,asto.re,DIRECT
+  - DOMAIN-SUFFIX,crashlytics.com,DIRECT
+  - DOMAIN-SUFFIX,darwinsource.com,DIRECT
+  - DOMAIN-SUFFIX,darwinsource.org,DIRECT
+  - DOMAIN-SUFFIX,darwinsourcecode.com,DIRECT
+  - DOMAIN-SUFFIX,icloud-apple.cn,DIRECT
+  - DOMAIN-SUFFIX,icloud-content.com,DIRECT
+  - DOMAIN-SUFFIX,icloud-isupport.com,DIRECT
+  - DOMAIN-SUFFIX,icloud-sandbox.com,DIRECT
+  - DOMAIN-SUFFIX,icloud.ch,DIRECT
+  - DOMAIN-SUFFIX,icloud.com,DIRECT
+  - DOMAIN-SUFFIX,icloud.com.akadns.net,DIRECT
+  - DOMAIN-SUFFIX,icloud.com.cn,DIRECT
+  - DOMAIN-SUFFIX,icloud.de,DIRECT
+  - DOMAIN-SUFFIX,icloud.ee,DIRECT
+  - DOMAIN-SUFFIX,icloud.fi,DIRECT
+  - DOMAIN-SUFFIX,icloud.fr,DIRECT
+  - DOMAIN-SUFFIX,icloud.hu,DIRECT
+  - DOMAIN-SUFFIX,icloud.ie,DIRECT
+  - DOMAIN-SUFFIX,icloud.is,DIRECT
+  - DOMAIN-SUFFIX,icloud.jp,DIRECT
+  - DOMAIN-SUFFIX,icloud.lv,DIRECT
+  - DOMAIN-SUFFIX,icloud.net.cn,DIRECT
+  - DOMAIN-SUFFIX,icloud.om,DIRECT
+  - DOMAIN-SUFFIX,icloud.org,DIRECT
+  - DOMAIN-SUFFIX,icloud.pt,DIRECT
+  - DOMAIN-SUFFIX,icloud.ro,DIRECT
+  - DOMAIN-SUFFIX,icloud.se,DIRECT
+  - DOMAIN-SUFFIX,icloud.si,DIRECT
+  - DOMAIN-SUFFIX,icloud.sk,DIRECT
+  - DOMAIN-SUFFIX,icloud.vn,DIRECT
+  - DOMAIN-SUFFIX,icloudads.net,DIRECT
+  - DOMAIN-SUFFIX,icloudapple.cn,DIRECT
+  - DOMAIN-SUFFIX,icloudbox.net,DIRECT
+  - DOMAIN-SUFFIX,icloudbrowser.net,DIRECT
+  - DOMAIN-SUFFIX,icloude.com,DIRECT
+  - DOMAIN-SUFFIX,icloudhome.com,DIRECT
+  - DOMAIN-SUFFIX,icloudmail.net,DIRECT
+  - DOMAIN-SUFFIX,icloudmusic.net,DIRECT
+  - DOMAIN-SUFFIX,icloudnet.net,DIRECT
+  - DOMAIN-SUFFIX,icloudo.com,DIRECT
+  - DOMAIN-SUFFIX,icloudo.de,DIRECT
+  - DOMAIN-SUFFIX,icloudo.net,DIRECT
+  - DOMAIN-SUFFIX,icloudos.de,DIRECT
+  - DOMAIN-SUFFIX,icloudos.net,DIRECT
+  - DOMAIN-SUFFIX,icloudpay.net,DIRECT
+  - DOMAIN-SUFFIX,icloudsecure.net,DIRECT
+  - DOMAIN-SUFFIX,icloudsetup.com,DIRECT
+  - DOMAIN-SUFFIX,ids-apple.com,DIRECT
+  - DOMAIN-SUFFIX,ios-icloud.com,DIRECT
+  - DOMAIN-SUFFIX,itun.es,DIRECT
+  - DOMAIN-SUFFIX,itunbes.com,DIRECT
+  - DOMAIN-SUFFIX,ituneas.com,DIRECT
+  - DOMAIN-SUFFIX,itunes-apple.cn,DIRECT
+  - DOMAIN-SUFFIX,itunes-apple.com.akadns.net,DIRECT
+  - DOMAIN-SUFFIX,itunes-radio.net,DIRECT
+  - DOMAIN-SUFFIX,itunes.ca,DIRECT
+  - DOMAIN-SUFFIX,itunes.co,DIRECT
+  - DOMAIN-SUFFIX,itunes.co.th,DIRECT
+  - DOMAIN-SUFFIX,itunes.com,DIRECT
+  - DOMAIN-SUFFIX,itunes.hk,DIRECT
+  - DOMAIN-SUFFIX,itunes.mx,DIRECT
+  - DOMAIN-SUFFIX,itunes.org,DIRECT
+  - DOMAIN-SUFFIX,itunes.rio,DIRECT
+  - DOMAIN-SUFFIX,itunes.us,DIRECT
+  - DOMAIN-SUFFIX,itunes12days.com,DIRECT
+  - DOMAIN-SUFFIX,itunesapple.cn,DIRECT
+  - DOMAIN-SUFFIX,itunesessentials.com,DIRECT
+  - DOMAIN-SUFFIX,itunesfestivals.com,DIRECT
+  - DOMAIN-SUFFIX,itunesiradio.com,DIRECT
+  - DOMAIN-SUFFIX,ituneslatino.com,DIRECT
+  - DOMAIN-SUFFIX,ituneslogin.net,DIRECT
+  - DOMAIN-SUFFIX,itunesmatch.com,DIRECT
+  - DOMAIN-SUFFIX,itunesparty.com,DIRECT
+  - DOMAIN-SUFFIX,itunesradio.cn,DIRECT
+  - DOMAIN-SUFFIX,itunesradio.com,DIRECT
+  - DOMAIN-SUFFIX,itunesradio.com.cn,DIRECT
+  - DOMAIN-SUFFIX,itunesradio.rio,DIRECT
+  - DOMAIN-SUFFIX,itunesradio.tv,DIRECT
+  - DOMAIN-SUFFIX,itunesradio.tw,DIRECT
+  - DOMAIN-SUFFIX,itunesstore.co,DIRECT
+  - DOMAIN-SUFFIX,itunesu.com,DIRECT
+  - DOMAIN-SUFFIX,itunesu.net,DIRECT
+  - DOMAIN-SUFFIX,iutunes.com,DIRECT
+  - DOMAIN-SUFFIX,me.com,DIRECT
+  - DOMAIN-SUFFIX,myappleid.com,DIRECT
+  - DOMAIN-SUFFIX,myicloud.net,DIRECT
+  - DOMAIN-SUFFIX,mylcloud.net,DIRECT
+  - DOMAIN-SUFFIX,tvappstore.net,DIRECT
+  - DOMAIN-SUFFIX,wwwicloud.com,DIRECT
+  - DOMAIN-SUFFIX,wwwitunes.com,DIRECT
+  - PROCESS-NAME,com.apple.geod,DIRECT
+  - DOMAIN-SUFFIX,push.apple.com,Apple Push
+  - DOMAIN-SUFFIX,push-apple.com.akadns.net,Apple Push
+  - DOMAIN-KEYWORD,apple.com.edgekey.net,Apple Push
+  - IP-CIDR,17.249.0.0/16,Apple Push,no-resolve
+  - IP-CIDR,17.252.0.0/16,Apple Push,no-resolve
+  - IP-CIDR,17.57.144.0/22,Apple Push,no-resolve
+  - IP-CIDR,17.188.128.0/18,Apple Push,no-resolve
+  - IP-CIDR,17.188.20.0/23,Apple Push,no-resolve
+  - IP-CIDR6,2620:149:a44::/48,Apple Push,no-resolve
+  - IP-CIDR6,2403:300:a42::/48,Apple Push,no-resolve
+  - IP-CIDR6,2403:300:a51::/48,Apple Push,no-resolve
+  - IP-CIDR6,2a01:b740:a42::/48,Apple Push,no-resolve
+  - IP-CIDR,66.94.0.0/19,Proxies,no-resolve
+  - IP-CIDR,206.29.177.36/32,Proxies,no-resolve
+  - IP-CIDR,208.54.0.0/16,Proxies,no-resolve
+  - DST-PORT,500,Proxies
+  - DST-PORT,4500,Proxies
+  - DOMAIN-SUFFIX,t-mobile.com,Proxies
+  - DOMAIN-SUFFIX,3gppnetwork.org,Proxies
+  - DOMAIN-SUFFIX,ondemandconnectivity.com,Proxies
+  - DOMAIN-SUFFIX,advertising.com,Proxies
+  - DOMAIN-SUFFIX,aol.co.uk,Proxies
+  - DOMAIN-SUFFIX,aol.com,Proxies
+  - DOMAIN-SUFFIX,aol.de,Proxies
+  - DOMAIN-SUFFIX,aol.fr,Proxies
+  - DOMAIN-SUFFIX,aolcdn.com,Proxies
+  - DOMAIN-SUFFIX,autoblog.com,Proxies
+  - DOMAIN-SUFFIX,engadget.com,Proxies
+  - DOMAIN-SUFFIX,engagedaily.org,Proxies
+  - DOMAIN-SUFFIX,flic.kr,Proxies
+  - DOMAIN-SUFFIX,flickr.com,Proxies
+  - DOMAIN-SUFFIX,flickr.net,Proxies
+  - DOMAIN-SUFFIX,flurry.com,Proxies
+  - DOMAIN-SUFFIX,huffingtonpost.com,Proxies
+  - DOMAIN-SUFFIX,huffpost.com,Proxies
+  - DOMAIN-SUFFIX,intheknow.com,Proxies
+  - DOMAIN-SUFFIX,maktoob.com,Proxies
+  - DOMAIN-SUFFIX,myguide.hk,Proxies
+  - DOMAIN-SUFFIX,oath.cloud,Proxies
+  - DOMAIN-SUFFIX,oath.com,Proxies
+  - DOMAIN-SUFFIX,omniroot.com,Proxies
+  - DOMAIN-SUFFIX,ouroath.com,Proxies
+  - DOMAIN-SUFFIX,static-verizon.com,Proxies
+  - DOMAIN-SUFFIX,staticflickr.com,Proxies
+  - DOMAIN-SUFFIX,techcrunch.com,Proxies
+  - DOMAIN-SUFFIX,uplynk.com,Proxies
+  - DOMAIN-SUFFIX,verizon.com,Proxies
+  - DOMAIN-SUFFIX,verizon.net,Proxies
+  - DOMAIN-SUFFIX,verizonbusiness.com,Proxies
+  - DOMAIN-SUFFIX,verizonbusinessfios.com,Proxies
+  - DOMAIN-SUFFIX,verizondigitalmedia.com,Proxies
+  - DOMAIN-SUFFIX,verizonenterprise.com,Proxies
+  - DOMAIN-SUFFIX,verizonfios.com,Proxies
+  - DOMAIN-SUFFIX,verizonmedia.com,Proxies
+  - DOMAIN-SUFFIX,verizonwireless.com,Proxies
+  - DOMAIN-SUFFIX,vzw.com,Proxies
+  - DOMAIN-SUFFIX,xo.com,Proxies
+  - DOMAIN-SUFFIX,fast.com,Proxies
+  - DOMAIN-SUFFIX,ooklaserver.net,Proxies
+  - DOMAIN-SUFFIX,speed.cloudflare.com,Proxies
+  - DOMAIN-SUFFIX,speed.dler.io,Proxies
+  - DOMAIN-KEYWORD,speedtest,Proxies
+  - DOMAIN-SUFFIX,cf-ipfs.com,Cloudflare
+  - DOMAIN-SUFFIX,cf-ns.com,Cloudflare
+  - DOMAIN-SUFFIX,cf-ns.net,Cloudflare
+  - DOMAIN-SUFFIX,cf-ns.site,Cloudflare
+  - DOMAIN-SUFFIX,cf-ns.tech,Cloudflare
+  - DOMAIN-SUFFIX,cftest5.cn,Cloudflare
+  - DOMAIN-SUFFIX,cftest6.cn,Cloudflare
+  - DOMAIN-SUFFIX,cftest7.com,Cloudflare
+  - DOMAIN-SUFFIX,cftest8.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflare-cn.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflare-dns.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflare-ipfs.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflare-quic.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflare.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflare.net,Cloudflare
+  - DOMAIN-SUFFIX,cloudflare.tv,Cloudflare
+  - DOMAIN-SUFFIX,cloudflareaccess.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflareapps.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarebolt.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflareclient.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarecn.net,Cloudflare
+  - DOMAIN-SUFFIX,cloudflareinsights-cn.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflareinsights.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflareok.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarepreview.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflareprod.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflareresolve.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflaressl.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarestaging.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarestatus.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarestorage.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarestoragegw.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarestream.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflaretest.com,Cloudflare
+  - DOMAIN-SUFFIX,cloudflarewarp.com,Cloudflare
+  - DOMAIN-SUFFIX,every1dns.net,Cloudflare
+  - DOMAIN-SUFFIX,one.one.one,Cloudflare
+  - DOMAIN-SUFFIX,pacloudflare.com,Cloudflare
+  - DOMAIN-SUFFIX,pages.dev,Cloudflare
+  - DOMAIN-SUFFIX,trycloudflare.com,Cloudflare
+  - DOMAIN-SUFFIX,videodelivery.net,Cloudflare
+  - DOMAIN-SUFFIX,warp.plus,Cloudflare
+  - DOMAIN-SUFFIX,workers.dev,Cloudflare
+  - IP-CIDR,103.21.244.0/22,Cloudflare
+  - IP-CIDR,103.22.200.0/22,Cloudflare
+  - IP-CIDR,103.31.4.0/22,Cloudflare
+  - IP-CIDR,104.16.0.0/13,Cloudflare
+  - IP-CIDR,104.24.0.0/14,Cloudflare
+  - IP-CIDR,108.162.192.0/18,Cloudflare
+  - IP-CIDR,131.0.72.0/22,Cloudflare
+  - IP-CIDR,141.101.64.0/18,Cloudflare
+  - IP-CIDR,162.158.0.0/15,Cloudflare
+  - IP-CIDR,172.64.0.0/13,Cloudflare
+  - IP-CIDR,173.245.48.0/20,Cloudflare
+  - IP-CIDR,188.114.96.0/20,Cloudflare
+  - IP-CIDR,190.93.240.0/20,Cloudflare
+  - IP-CIDR,197.234.240.0/22,Cloudflare
+  - IP-CIDR,198.41.128.0/17,Cloudflare
+  - IP-CIDR6,2400:cb00::/32,Cloudflare
+  - IP-CIDR6,2405:8100::/32,Cloudflare
+  - IP-CIDR6,2405:b500::/32,Cloudflare
+  - IP-CIDR6,2606:4700::/32,Cloudflare
+  - IP-CIDR6,2803:f800::/32,Cloudflare
+  - IP-CIDR6,2a06:98c0::/29,Cloudflare
+  - IP-CIDR6,2c0f:f248::/32,Cloudflare
   - DOMAIN-SUFFIX,ggpht.com,YouTube
   - DOMAIN-SUFFIX,googlevideo.com,YouTube
   - DOMAIN-SUFFIX,gvt1.com,YouTube
