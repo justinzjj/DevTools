@@ -1,0 +1,4 @@
+interface:
+  display_name: "MinerU PDF Convert"
+  short_description: "Convert PDFs to Markdown with MinerU"
+  default_prompt: "Use $mineru-pdf-convert to convert this PDF or folder of PDFs into Markdown with extracted assets."

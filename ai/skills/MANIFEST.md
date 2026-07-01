@@ -8,6 +8,7 @@
 
 - `.system/`：Codex 系统技能。
 - `codex-primary-runtime/`：当前为空目录。
+- `.mineru.env`：MinerU 私有 token 文件，只保留在本机 Codex skill 目录。
 
 ## 偏个人/项目沉淀
 
@@ -15,6 +16,7 @@
 - `ccf-paper-collection`
 - `crossdatagen-daily-research-workflow`
 - `daily-work-entry`
+- `mineru-pdf-convert`
 - `neat-freak`
 - `openclaw-config`
 - `paper-pdf-zotero-pipeline`
@@ -47,6 +49,7 @@
 rsync -a --delete \
   --exclude='.system/' \
   --exclude='codex-primary-runtime/' \
+  --exclude='.mineru.env' \
   --exclude='__pycache__/' \
   --exclude='*.pyc' \
   /Users/justin/.codex/skills/ \

@@ -6,3 +6,5 @@ docker/.DS_Store
 output/
 tmp/
 .DS_Store
+__pycache__/
+*.pyc
